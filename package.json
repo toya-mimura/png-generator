@@ -1,0 +1,26 @@
+{
+  "name": "web-scraping-report-generator",
+  "version": "1.0.0",
+  "description": "Web scraping tool that generates visual reports as PNG",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web-scraping",
+    "playwright",
+    "puppeteer",
+    "openai",
+    "report-generation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.41.0",
+    "puppeteer": "^21.7.0",
+    "openai": "^4.26.0",
+    "dotenv": "^16.3.1"
+  }
+}
