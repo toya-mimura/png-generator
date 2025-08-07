@@ -1,0 +1,48 @@
+name: Generate Report
+
+on:
+  schedule:
+    # Run every day at 9:00 AM JST (0:00 UTC)
+    - cron: '23 5 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Install Playwright browsers
+      run: npx playwright install chromium
+    
+    - name: Generate report
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: npm start
+    
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: report-${{ github.run_number }}
+        path: |
+          report.png
+          report.html
+        retention-days: 30
+    
+    - name: Commit and push report (optional)
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add report.png report.html || true
+        git commit -m "Update report - $(date '+%Y-%m-%d %H:%M:%S')" || true
+        git push || true
