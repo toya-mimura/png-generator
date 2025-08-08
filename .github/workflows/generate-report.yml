@@ -19,11 +19,36 @@ jobs:
       with:
         node-version: '20'
     
+    - name: Install system dependencies for Puppeteer/Playwright
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          libnss3 \
+          libnspr4 \
+          libatk1.0-0 \
+          libatk-bridge2.0-0 \
+          libcups2 \
+          libdrm2 \
+          libdbus-1-3 \
+          libatspi2.0-0 \
+          libx11-6 \
+          libxcomposite1 \
+          libxdamage1 \
+          libxext6 \
+          libxfixes3 \
+          libxrandr2 \
+          libgbm1 \
+          libxcb1 \
+          libxkbcommon0 \
+          libpango-1.0-0 \
+          libcairo2 \
+          libasound2
+    
     - name: Install dependencies
       run: npm install
     
-    - name: Install Playwright browsers
-      run: npx playwright install chromium
+    - name: Install Playwright browsers with dependencies
+      run: npx playwright install --with-deps chromium
     
     - name: Generate report
       env:
@@ -38,6 +63,7 @@ jobs:
           report.png
           report.html
         retention-days: 30
+      if: always()  # アーティファクトは常にアップロード
     
     - name: Commit and push report (optional)
       run: |
@@ -46,3 +72,4 @@ jobs:
         git add report.png report.html || true
         git commit -m "Update report - $(date '+%Y-%m-%d %H:%M:%S')" || true
         git push || true
+      continue-on-error: true  # エラーがあっても続行
