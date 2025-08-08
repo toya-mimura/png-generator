@@ -1,7 +1,6 @@
-// index.js
+// index.js - Playwright only version (no Puppeteer)
 import 'dotenv/config';
 import { chromium } from 'playwright';
-import puppeteer from 'puppeteer';
 import OpenAI from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
@@ -51,7 +50,7 @@ async function loadTargetURLs() {
   
   // Default URLs if none specified
   return [
-    'https://www.google.com/finance/quote/VIX:INDEXCBOE',
+    'https://www.google.com/finance/quote/VIX:INDEXCBOE'
   ];
 }
 
@@ -59,7 +58,10 @@ async function loadTargetURLs() {
  * Scrape content from a single URL
  */
 async function scrapeURL(url) {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ 
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'] // GitHub Actions対応
+  });
   const context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
   });
@@ -187,21 +189,24 @@ ${JSON.stringify(scrapedData, null, 2)}
 }
 
 /**
- * Convert HTML to PNG using Puppeteer
+ * Convert HTML to PNG using Playwright (not Puppeteer!)
  */
 async function htmlToPNG(htmlContent, outputPath) {
-  const browser = await puppeteer.launch({ headless: 'new' });
-  const page = await browser.newPage();
+  const browser = await chromium.launch({ 
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'] // GitHub Actions対応
+  });
+  const context = await browser.newContext({
+    viewport: { width: 1200, height: 800 }
+  });
+  const page = await context.newPage();
   
   try {
-    // Set viewport for consistent rendering
-    await page.setViewport({ width: 1200, height: 800 });
-    
     // Set HTML content
-    await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+    await page.setContent(htmlContent, { waitUntil: 'networkidle' });
     
     // Wait for any charts to render
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     
     // Take screenshot
     await page.screenshot({
