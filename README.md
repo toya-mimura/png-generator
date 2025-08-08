@@ -1,4 +1,7 @@
-# Web Scraping Report Generator
+* This repository is for private demonstration purposes.
+* Actions are executed once per day.
+
+# png-gnenerator
 
 指定したウェブページをスクレイピングし、OpenAI APIで分析・可視化したレポートをPNG画像として生成するツールです。
 
