@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>VIXデータレポート</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,142 +14,95 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2, h3 {
-            color: #ffcc00;
+        h1, h2 {
+            color: #00bcd4;
         }
         .summary {
             background-color: #1e1e1e;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 5px;
             margin-bottom: 20px;
+        }
+        .data-section {
+            margin-bottom: 30px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ffcc00;
+            color: #ff9800;
         }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            max-width: 800px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #444444;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        tr:nth-child(even) {
-            background-color: #222222;
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.8em;
+        canvas {
+            max-width: 100%;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: <span class="highlight">2025年8月8日 15:15 (GMT-5)</span></p>
+        <h1>VIX データレポート</h1>
+        <p>取得日時: 2025年8月8日 15:15 (GMT-5)</p>
         <p>現在のVIX: <span class="highlight">15.15</span> (▼8.57%)</p>
+        <p>前日比: <span class="highlight">-1.42</span></p>
     </div>
 
-    <h2>市場動向</h2>
-    <table>
-        <thead>
+    <div class="data-section">
+        <h2>VIXトレンド</h2>
+        <canvas id="vixTrendChart"></canvas>
+    </div>
+
+    <div class="data-section">
+        <h2>関連する株価情報</h2>
+        <table style="width: 100%; border-collapse: collapse;">
             <tr>
-                <th>指標</th>
-                <th>価格</th>
-                <th>変化率</th>
+                <th style="text-align:left; border-bottom: 1px solid #ffffff;">銘柄</th>
+                <th style="text-align:right; border-bottom: 1px solid #ffffff;">価格</th>
+                <th style="text-align:right; border-bottom: 1px solid #ffffff;">変動率</th>
             </tr>
-        </thead>
-        <tbody>
             <tr>
-                <td>ダウ平均</td>
-                <td>44,175.61</td>
-                <td>+0.47%</td>
+                <td>ダウ・ジョーンズ</td>
+                <td style="text-align:right;">44,175.61</td>
+                <td style="text-align:right;">+0.47%</td>
             </tr>
             <tr>
                 <td>S&P 500</td>
-                <td>6,389.45</td>
-                <td>+0.78%</td>
+                <td style="text-align:right;">6,389.45</td>
+                <td style="text-align:right;">+0.78%</td>
             </tr>
             <tr>
                 <td>ナスダック</td>
-                <td>21,450.02</td>
-                <td>+0.98%</td>
+                <td style="text-align:right;">21,450.02</td>
+                <td style="text-align:right;">+0.98%</td>
             </tr>
-            <tr>
-                <td>VIX</td>
-                <td class="highlight">15.15</td>
-                <td class="highlight">▼8.57%</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>VIX トレンドチャート</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
+        </table>
     </div>
 
     <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
+        const ctx = document.getElementById('vixTrendChart').getContext('2d');
+        const vixTrendChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
                 datasets: [{
                     label: 'VIX',
-                    data: [16.57, 15.80, 14.50, 13.00, 12.70],
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
+                    data: [16.57, 15.50, 14.50, 13.80, 15.20, 12.70], // 仮のデータ
+                    backgroundColor: 'rgba(0, 188, 212, 0.2)',
+                    borderColor: 'rgba(0, 188, 212, 1)',
                     borderWidth: 2,
                     fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    }
-                },
                 scales: {
-                    x: {
-                        grid: {
-                            color: '#444444'
-                        },
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    },
                     y: {
-                        grid: {
-                            color: '#444444'
-                        },
-                        ticks: {
-                            color: '#ffffff'
-                        }
+                        beginAtZero: false
                     }
                 }
             }
         });
     </script>
-
-    <footer>
-        <p>データ提供元: Google Finance</p>
-    </footer>
 
 </body>
 </html>
