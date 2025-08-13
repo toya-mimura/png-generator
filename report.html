@@ -5,85 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIX レポート</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1 {
             text-align: center;
-        }
-        .summary {
-            margin-bottom: 20px;
-        }
-        .highlight {
-            font-size: 24px;
-            font-weight: bold;
             color: #ffcc00;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
+        .summary {
+            margin-bottom: 30px;
             padding: 10px;
-            border: 1px solid #444;
-            text-align: center;
+            border: 1px solid #ffcc00;
+            background-color: #2e2e2e;
+            border-radius: 5px;
         }
-        th {
-            background-color: #222;
+        .data-section {
+            margin-bottom: 50px;
         }
         .chart-container {
             position: relative;
+            height: 40vh;
+            width: 80vw;
             margin: auto;
-            max-width: 600px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
+
     <h1>VIX レポート</h1>
+
     <div class="summary">
-        <p>取得日時: <strong>2025年8月11日 15:15:01 GMT-5</strong></p>
-        <p>VIX: <span class="highlight">16.25 (▲7.26%)</span></p>
+        <h2>概要</h2>
+        <p>現在のVIX: <strong>14.73</strong> (▼<strong>9.35%</strong>)</p>
+        <p>取得日時: <strong>Aug 12, 3:15:01 PM GMT-5</strong></p>
+        <p>VIXは、S&P 500オプションに基づく株式市場の期待ボラティリティを示す指標です。</p>
     </div>
 
-    <h2>市場の概要</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>インデックス名</th>
-                <th>現在の価格</th>
-                <th>変動率</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Dow Jones</td>
-                <td>43,975.09</td>
-                <td>-0.45%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,373.45</td>
-                <td>-0.25%</td>
-            </tr>
-            <tr>
-                <td>Nasdaq</td>
-                <td>21,385.40</td>
-                <td>-0.30%</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>VIX トレンド</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
+    <div class="data-section">
+        <h2>VIXの推移</h2>
+        <div class="chart-container">
+            <canvas id="vixChart"></canvas>
+        </div>
     </div>
 
     <script>
@@ -91,24 +63,54 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y'],
+                labels: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'],
                 datasets: [{
-                    label: 'VIXトレンド',
-                    data: [15.15, 15.80, 16.25, 17.00, 16.50, 15.00, 14.50], // 仮のデータ
+                    label: 'VIX',
+                    data: [16.25, 15.50, 14.90, 14.80, 14.73, 14.60, 14.50],
                     borderColor: '#ffcc00',
                     backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    fill: true,
+                    borderWidth: 2,
+                    fill: true
                 }]
             },
             options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `VIX: ${tooltipItem.raw}`;
+                            }
+                        }
+                    }
+                },
                 scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    },
                     y: {
+                        title: {
+                            display: true,
+                            text: 'VIX値'
+                        },
                         beginAtZero: true
                     }
                 }
             }
         });
     </script>
+
+    <footer>
+        <p>&copy; 2023 VIXレポート</p>
+    </footer>
+
 </body>
 </html>
 ```
