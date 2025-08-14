@@ -4,112 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
+    <title>VIXデータレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #2c2c2c;
             color: #ffffff;
             margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
+        h1, h2 {
             color: #ffcc00;
         }
         .summary {
-            margin-bottom: 30px;
+            background-color: #3d3d3d;
             padding: 10px;
-            border: 1px solid #ffcc00;
-            background-color: #2e2e2e;
             border-radius: 5px;
         }
         .data-section {
-            margin-bottom: 50px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #444444;
+            border-radius: 5px;
         }
-        .chart-container {
-            position: relative;
-            height: 40vh;
-            width: 80vw;
-            margin: auto;
+        .highlight {
+            font-size: 1.5em;
+            color: #ffcc00;
         }
-        footer {
-            text-align: center;
-            margin-top: 50px;
+        canvas {
+            max-width: 100%;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>VIX レポート</h1>
-
+<div class="container">
+    <h1>VIXデータレポート</h1>
     <div class="summary">
         <h2>概要</h2>
-        <p>現在のVIX: <strong>14.73</strong> (▼<strong>9.35%</strong>)</p>
-        <p>取得日時: <strong>Aug 12, 3:15:01 PM GMT-5</strong></p>
-        <p>VIXは、S&P 500オプションに基づく株式市場の期待ボラティリティを示す指標です。</p>
+        <p>現在のVIX値: <span class="highlight">14.49</span> (▼1.63%)</p>
+        <p>取得日時: <span class="highlight">2023年8月13日 15:15 GMT-5</span></p>
     </div>
 
     <div class="data-section">
-        <h2>VIXの推移</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
+        <h2>VIXのトレンド</h2>
+        <canvas id="vixChart"></canvas>
     </div>
 
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'],
-                datasets: [{
-                    label: 'VIX',
-                    data: [16.25, 15.50, 14.90, 14.80, 14.73, 14.60, 14.50],
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return `VIX: ${tooltipItem.raw}`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: '日付'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'VIX値'
-                        },
-                        beginAtZero: true
-                    }
+    <div class="data-section">
+        <h2>関連インデックス</h2>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid #ffffff; padding: 8px;">インデックス名</th>
+                <th style="border: 1px solid #ffffff; padding: 8px;">現在値</th>
+                <th style="border: 1px solid #ffffff; padding: 8px;">変動率</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ffffff; padding: 8px;">ダウ・ジョーンズ</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">44,922.27</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">+1.04%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ffffff; padding: 8px;">S&P 500</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">6,466.58</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">+0.32%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ffffff; padding: 8px;">ナスダック</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">21,713.14</td>
+                <td style="border: 1px solid #ffffff; padding: 8px;">+0.14%</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('vixChart').getContext('2d');
+    const vixChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['08/12', '08/13', '08/14', '08/15', '08/16', '08/17', '08/18'], // 日付の例
+            datasets: [{
+                label: 'VIX値',
+                data: [14.73, 14.49, 14.75, 14.60, 14.50, 14.80, 14.60], // 仮のデータ
+                borderColor: '#ffcc00',
+                backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    </script>
-
-    <footer>
-        <p>&copy; 2023 VIXレポート</p>
-    </footer>
+        }
+    });
+</script>
 
 </body>
 </html>
