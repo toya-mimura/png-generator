@@ -9,131 +9,103 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
             margin: 0;
             padding: 20px;
+            background-color: #121212;
+            color: #ffffff;
         }
         h1, h2 {
             color: #00bcd4;
         }
         .summary {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #1e1e1e;
-            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 5px;
+        }
+        .data-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 5px;
+        }
+        canvas {
+            max-width: 100%;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ffeb3b;
-        }
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table th, table td {
-            border: 1px solid #444;
-            padding: 10px;
-            text-align: center;
-        }
-        table th {
-            background: #1e1e1e;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            table, h1, h2 {
-                font-size: 0.9em;
-            }
+            color: #ff4081;
         }
     </style>
 </head>
 <body>
+
+    <h1>VIX レポート</h1>
     <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: <span class="highlight">2023年8月15日 15:15 (GMT-5)</span></p>
-        <p>現在のVIX: <span class="highlight">15.09</span> (▲<span class="highlight">1.75%</span>)</p>
+        <h2>概要</h2>
+        <p>最新のVIX指数は <span class="highlight">14.99</span> で、前日比 <span class="highlight">▼0.66%</span> です。</p>
+        <p>取得日時: <span class="highlight">Aug 18, 3:15:01 PM GMT-5</span></p>
     </div>
 
-    <h2>VIXの動向</h2>
-    <div class="chart-container">
+    <div class="data-section">
+        <h2>VIX インデックス詳細</h2>
+        <p>VIXは、S&P 500オプションに基づく市場のボラティリティ期待を測る指標です。</p>
         <canvas id="vixChart"></canvas>
     </div>
-
-    <h2>関連データ</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>指標名</th>
-                <th>現在値</th>
-                <th>変化率</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>ダウ平均</td>
-                <td>44,946.12</td>
-                <td>+0.078%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,449.80</td>
-                <td>-0.29%</td>
-            </tr>
-            <tr>
-                <td>ナスダック</td>
-                <td>21,622.98</td>
-                <td>-0.40%</td>
-            </tr>
-            <tr>
-                <td>ロシェル</td>
-                <td>2,286.52</td>
-                <td>-0.55%</td>
-            </tr>
-        </tbody>
-    </table>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['前日', '今日'],
+                labels: ['08/16', '08/17', '08/18'],
                 datasets: [{
-                    label: 'VIX',
-                    data: [14.83, 15.09],
-                    borderColor: '#00bcd4',
+                    label: 'VIX Index',
+                    data: [15.20, 15.10, 14.99],
                     backgroundColor: 'rgba(0, 188, 212, 0.2)',
+                    borderColor: 'rgba(0, 188, 212, 1)',
                     borderWidth: 2,
                     fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'VIX値'
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
                         }
                     },
+                    tooltip: {
+                        backgroundColor: '#1e1e1e',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff'
+                    }
+                },
+                scales: {
                     x: {
-                        title: {
-                            display: true,
-                            text: '日'
+                        grid: {
+                            color: '#444444'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#444444'
+                        },
+                        ticks: {
+                            color: '#ffffff'
                         }
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
