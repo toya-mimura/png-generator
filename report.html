@@ -9,95 +9,98 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
             margin: 0;
             padding: 20px;
-            background-color: #121212;
-            color: #ffffff;
         }
-        h1, h2 {
-            color: #ffffff;
+        h1 {
+            text-align: center;
         }
         .summary {
-            background-color: #1e1e1e;
+            background-color: #2c2c2c;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
+        .section {
+            margin-bottom: 30px;
         }
         .chart-container {
             position: relative;
             margin: auto;
-            height: 400px;
-            width: 80%;
+            max-width: 600px;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #4caf50;
+        }
+        .error {
+            color: #ff5722;
         }
         @media (max-width: 768px) {
-            .chart-container {
-                width: 100%;
+            .summary, .section {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-
-<div class="summary">
     <h1>VIX レポート</h1>
-    <p>取得日時: 2023年8月19日 15:15 GMT-5</p>
-    <p class="highlight">VIX: 15.57 (▲3.87%)</p>
-</div>
+    <div class="summary">
+        <h2>概要</h2>
+        <p>現在のVIXは <span class="highlight">15.69</span> で、前日比 <span class="highlight">+0.77%</span> です。取得日時は <strong>2023年8月20日 15:15:01 GMT-5</strong> です。</p>
+    </div>
 
-<div class="chart-container">
-    <canvas id="vixChart"></canvas>
-</div>
+    <div class="section">
+        <h2>VIX の詳細</h2>
+        <p>VIX（ボラティリティ指数）は、S&P 500オプションの市場参加者による将来のボラティリティの期待を反映した指数です。</p>
+        <p>前回のクローズ: <span class="highlight">15.57</span></p>
+        <p>日中の範囲: <span class="highlight">15.57 - 17.19</span></p>
+        <p>年間範囲: <span class="highlight">12.70 - 60.13</span></p>
+    </div>
 
-<h2>今日の市場動向</h2>
-<p>ダウジョーンズ: 44,922.27 (0.023%)</p>
-<p>S&P 500: 6,411.37 (-0.59%)</p>
-<p>ナスダック: 21,314.95 (-1.46%)</p>
+    <div class="section">
+        <h2>VIX 価格推移</h2>
+        <div class="chart-container">
+            <canvas id="vixChart"></canvas>
+        </div>
+    </div>
 
-<script>
-    const ctx = document.getElementById('vixChart').getContext('2d');
-    const vixChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['前日', '今日'],
-            datasets: [{
-                label: 'VIX',
-                data: [14.99, 15.57], // 前日終値と今日の値
-                backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                borderColor: 'rgba(255, 204, 0, 1)',
-                borderWidth: 2,
-                fill: true,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'VIX値'
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['前日', '今日'],
+                datasets: [{
+                    label: 'VIX',
+                    data: [15.57, 15.69],
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VIX値'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                title: {
-                    display: true,
-                    text: 'VIXの推移'
-                }
             }
-        }
-    });
-</script>
-
+        });
+    </script>
 </body>
 </html>
 ```
