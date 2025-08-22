@@ -4,67 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>VIX データレポート</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
+        h1, h2 {
+            color: #1e90ff;
         }
         .summary {
-            background-color: #2c2c2c;
+            background: #1c1c1c;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .section {
-            margin-bottom: 30px;
-        }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            max-width: 600px;
+        .data-section {
+            background: #1c1c1c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #4caf50;
+            color: #ffcc00;
         }
-        .error {
-            color: #ff5722;
+        canvas {
+            max-width: 100%;
         }
-        @media (max-width: 768px) {
-            .summary, .section {
+        @media (max-width: 600px) {
+            body {
                 padding: 10px;
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>VIX レポート</h1>
+    <h1>VIX データレポート</h1>
     <div class="summary">
         <h2>概要</h2>
-        <p>現在のVIXは <span class="highlight">15.69</span> で、前日比 <span class="highlight">+0.77%</span> です。取得日時は <strong>2023年8月20日 15:15:01 GMT-5</strong> です。</p>
+        <p>現在のVIX値は<span class="highlight">16.60</span>で、前日比で<span class="highlight">5.80%</span>上昇しました。</p>
+        <p>取得日時: 2023年8月21日 15:15 (GMT-5)</p>
     </div>
-
-    <div class="section">
-        <h2>VIX の詳細</h2>
-        <p>VIX（ボラティリティ指数）は、S&P 500オプションの市場参加者による将来のボラティリティの期待を反映した指数です。</p>
-        <p>前回のクローズ: <span class="highlight">15.57</span></p>
-        <p>日中の範囲: <span class="highlight">15.57 - 17.19</span></p>
-        <p>年間範囲: <span class="highlight">12.70 - 60.13</span></p>
-    </div>
-
-    <div class="section">
-        <h2>VIX 価格推移</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
+    
+    <div class="data-section">
+        <h2>VIX トレンド</h2>
+        <canvas id="vixChart"></canvas>
     </div>
 
     <script>
@@ -72,29 +61,29 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['前日', '今日'],
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'], // 一例としてのラベル
                 datasets: [{
-                    label: 'VIX',
-                    data: [15.57, 15.69],
-                    borderColor: 'rgba(76, 175, 80, 1)',
-                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
+                    label: 'VIX 値',
+                    data: [15.69, 16.20, 17.00, 16.80, 15.50, 14.00], // ダミーデータ
+                    backgroundColor: 'rgba(30, 144, 255, 0.2)',
+                    borderColor: 'rgba(30, 144, 255, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'VIX値'
+                            text: 'VIX 値'
                         }
                     },
                     x: {
                         title: {
                             display: true,
-                            text: '日付'
+                            text: '期間'
                         }
                     }
                 }
