@@ -5,74 +5,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIXレポート</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #f5c518;
         }
         .summary {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ffcc00;
-            border-radius: 5px;
+            margin-bottom: 30px;
+            padding: 20px;
             background-color: #1e1e1e;
-        }
-        .chart-container {
-            position: relative;
-            height: 40vh;
-            width: 80vw;
+            border-radius: 8px;
         }
         .data-section {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ffcc00;
-            border-radius: 5px;
+            margin-bottom: 30px;
+            padding: 20px;
             background-color: #1e1e1e;
+            border-radius: 8px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ffcc00;
+            color: #f5c518;
         }
-        footer {
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #444;
+        }
+        th, td {
+            padding: 10px;
             text-align: center;
-            font-size: 0.8em;
-            color: #aaaaaa;
         }
     </style>
 </head>
 <body>
-
-    <h1>VIX レポート</h1>
     <div class="summary">
-        <h2>サマリー</h2>
-        <p>現在のVIXは <span class="highlight">14.22</span> で、前日比 <span class="highlight">-14.34%</span> です。</p>
-        <p>取得日時: <span class="highlight">2023年8月22日 15:15 (GMT-5)</span></p>
+        <h1>VIXレポート</h1>
+        <p>取得日時: 2023年8月22日 3:15:01 PM GMT-5</p>
+        <p>現在のVIX: <span class="highlight">14.22</span> (▼14.34%)</p>
     </div>
 
     <div class="data-section">
-        <h2>市場データ</h2>
-        <p>ダウ・ジョーンズ: <span class="highlight">45,631.74 (+1.89%)</span></p>
-        <p>S&P 500: <span class="highlight">6,466.91 (+1.52%)</span></p>
-        <p>ナスダック: <span class="highlight">21,496.54 (+1.88%)</span></p>
-    </div>
-
-    <div class="chart-container">
+        <h2>VIXの詳細</h2>
+        <p>今日の変動: <span class="highlight">-2.38</span></p>
+        <p>前日終値: <span class="highlight">16.60</span></p>
+        <p>日レンジ: <span class="highlight">14.21 - 16.83</span></p>
+        <p>年レンジ: <span class="highlight">12.70 - 60.13</span></p>
+        
         <canvas id="vixChart"></canvas>
     </div>
 
-    <footer>
-        <p>データソース: <a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #ffcc00;">Google Finance</a></p>
-    </footer>
+    <div class="data-section">
+        <h2>市場インデックス</h2>
+        <table>
+            <tr>
+                <th>インデックス</th>
+                <th>現在値</th>
+                <th>変動率</th>
+            </tr>
+            <tr>
+                <td>ダウ平均</td>
+                <td>45,631.74</td>
+                <td>+1.89%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,466.91</td>
+                <td>+1.52%</td>
+            </tr>
+            <tr>
+                <td>ナスダック</td>
+                <td>21,496.54</td>
+                <td>+1.88%</td>
+            </tr>
+            <tr>
+                <td>ラッセル2000</td>
+                <td>2,361.95</td>
+                <td>+3.86%</td>
+            </tr>
+        </table>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
@@ -81,9 +107,9 @@
                 labels: ['前日', '今日'],
                 datasets: [{
                     label: 'VIX',
-                    data: [16.60, 14.22], // 前日終値と現在値
-                    backgroundColor: 'rgba(255, 204, 0, 0.5)',
-                    borderColor: '#ffcc00',
+                    data: [16.60, 14.22],
+                    borderColor: '#f5c518',
+                    backgroundColor: 'rgba(245, 197, 24, 0.2)',
                     borderWidth: 2,
                     fill: true,
                 }]
@@ -92,17 +118,16 @@
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: false,
+                        beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'VIX'
+                            text: 'VIX値'
                         }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
                         }
                     }
                 }
