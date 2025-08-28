@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>VIX Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,131 +15,85 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #00bcd4;
         }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-        }
-        .summary {
-            background-color: #1e1e1e;
+        .summary, .data-section {
+            margin: 20px 0;
             padding: 15px;
-            border-radius: 5px;
-        }
-        .important {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 10px;
             border: 1px solid #444;
-            text-align: center;
-        }
-        th {
+            border-radius: 5px;
             background-color: #1e1e1e;
         }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.8em;
+        .highlight {
+            font-size: 1.5em;
+            color: #ffeb3b;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
     <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: <span class="important">Aug 26, 3:15:01 PM GMT-5</span></p>
-        <p>現在のVIX: <span class="important">14.62 (▼1.15%)</span></p>
-        <p>前回の終値: <span class="important">14.79</span></p>
+        <h1>VIX Report</h1>
+        <p>取得日時: <span class="highlight">Aug 27, 3:15:01 PM GMT-5</span></p>
+        <p>現在のVIX: <span class="highlight">14.85</span> (▲1.57%)</p>
     </div>
 
-    <h2>市場データ</h2>
-    <table>
-        <tr>
-            <th>指数名</th>
-            <th>価格</th>
-            <th>変化率</th>
-        </tr>
-        <tr>
-            <td>ダウ平均</td>
-            <td>45,418.07</td>
-            <td>+0.30%</td>
-        </tr>
-        <tr>
-            <td>S&P 500</td>
-            <td>6,465.94</td>
-            <td>+0.41%</td>
-        </tr>
-        <tr>
-            <td>ナスダック</td>
-            <td>21,544.27</td>
-            <td>+0.44%</td>
-        </tr>
-        <tr>
-            <td>Russell 2000</td>
-            <td>2,358.60</td>
-            <td>+0.83%</td>
-        </tr>
-    </table>
+    <div class="data-section">
+        <h2>VIXの詳細</h2>
+        <p>VIXは市場のボラティリティを示す指標です。現在の値は <span class="highlight">14.85</span> で、前日比 <span class="highlight">+1.57%</span> です。</p>
+        <p>前日終値: <span class="highlight">14.62</span></p>
+        <p>日中レンジ: <span class="highlight">14.66 - 15.23</span></p>
+        <p>52週レンジ: <span class="highlight">12.70 - 60.13</span></p>
+    </div>
 
-    <h2>VIXのトレンド</h2>
-    <div class="chart-container">
+    <div class="data-section">
+        <h2>VIXのトレンド</h2>
         <canvas id="vixChart"></canvas>
     </div>
-</div>
 
-<footer>
-    <p>&copy; 2023 VIX Report. All rights reserved.</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('vixChart').getContext('2d');
-    const vixChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
-            datasets: [{
-                label: 'VIXの価格',
-                data: [14.62, 15.00, 14.80, 16.50, 12.70],
-                backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                borderColor: 'rgba(255, 204, 0, 1)',
-                borderWidth: 2,
-                fill: true,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '価格'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: '期間'
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1D', '5D', '1M', '6M', '1Y'],
+                datasets: [{
+                    label: 'VIX Trend',
+                    data: [14.85, 15.00, 14.50, 14.80, 15.10],
+                    borderColor: 'rgba(255, 193, 7, 1)',
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VIX Value'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time Period'
+                        }
                     }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>
 </html>
