@@ -4,102 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXレポート</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffa500;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
+            color: #e0e0e0;
         }
         .summary {
-            background: #333;
+            background-color: #1e1e1e;
             padding: 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
+        }
+        .highlight {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
         }
         .chart-container {
             position: relative;
             margin: 20px 0;
-            height: 400px;
-            width: 100%;
+            height: 40vh;
+            width: 80vw;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
-        table, th, td {
-            border: 1px solid #444;
-        }
         th, td {
-            padding: 10px;
-            text-align: center;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #444;
         }
         th {
-            background-color: #444;
-        }
-        .highlight {
-            font-size: 1.5em;
-            color: #ff4500;
+            background-color: #1e1e1e;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="summary">
-            <h1>VIXレポート</h1>
-            <p>取得日時: 2023年8月29日 3:15 PM GMT-5</p>
-            <p>現在のVIX値: <span class="highlight">15.36</span> (▲<span class="highlight">6.44%</span>)</p>
-            <p>前回の終値: 14.43</p>
-        </div>
 
-        <h2>VIXトレンド</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
+    <div class="summary">
+        <h1>VIX レポート</h1>
+        <p>取得日時: <span class="highlight">Aug 29, 3:15:01 PM GMT-5</span></p>
+        <p>現在のVIX: <span class="highlight">15.36 (▲6.44%)</span></p>
+        <p>価格変動: <span class="highlight">+0.93</span></p>
+    </div>
 
-        <h2>関連市場インデックス</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>インデックス</th>
-                    <th>現在の値</th>
-                    <th>変動率</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>ダウ平均</td>
-                    <td>45,544.88</td>
-                    <td>0.20%</td>
-                </tr>
-                <tr>
-                    <td>S&P 500</td>
-                    <td>6,460.26</td>
-                    <td>0.64%</td>
-                </tr>
-                <tr>
-                    <td>ナスダック</td>
-                    <td>21,455.55</td>
-                    <td>1.15%</td>
-                </tr>
-                <tr>
-                    <td>ロッシェル 2000</td>
-                    <td>2,366.42</td>
-                    <td>0.50%</td>
-                </tr>
-            </tbody>
-        </table>
+    <h2>市場データ</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>インデックス</th>
+                <th>価格</th>
+                <th>変動率</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dow Jones</td>
+                <td>45,544.88</td>
+                <td>-0.20%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,460.26</td>
+                <td>-0.64%</td>
+            </tr>
+            <tr>
+                <td>Nasdaq</td>
+                <td>21,455.55</td>
+                <td>-1.15%</td>
+            </tr>
+            <tr>
+                <td>Russell</td>
+                <td>2,366.42</td>
+                <td>-0.50%</td>
+            </tr>
+            <tr>
+                <td>VIX</td>
+                <td>15.36</td>
+                <td>+6.44%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="chart-container">
+        <canvas id="vixChart"></canvas>
     </div>
 
     <script>
@@ -107,40 +104,21 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['8/28', '8/29', '8/30', '8/31', '9/1'],
+                labels: ['前日', '当日'],
                 datasets: [{
-                    label: 'VIX値',
-                    data: [14.43, 15.36, 14.80, 15.00, 15.20],
-                    borderColor: 'rgba(255, 165, 0, 1)',
-                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    label: 'VIX インデックス',
+                    data: [14.43, 15.36],
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    borderColor: 'rgba(255, 204, 0, 1)',
                     borderWidth: 2,
                     fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                    }
-                },
                 scales: {
-                    x: {
-                        type: 'category',
-                        title: {
-                            display: true,
-                            text: '日付'
-                        }
-                    },
                     y: {
-                        title: {
-                            display: true,
-                            text: 'VIX値'
-                        }
+                        beginAtZero: true
                     }
                 }
             }
