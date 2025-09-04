@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX Data Report</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -15,48 +15,47 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #00bcd4;
+            color: #f0a500;
         }
         .summary {
             margin-bottom: 20px;
             padding: 10px;
-            background-color: #1e1e1e;
+            border: 1px solid #f0a500;
             border-radius: 5px;
         }
-        .data-section {
-            margin: 20px 0;
+        .chart-container {
+            position: relative;
+            margin: auto;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
             padding: 10px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
+            text-align: left;
+            border-bottom: 1px solid #444;
         }
-        canvas {
-            max-width: 100%;
-            height: auto;
+        th {
+            background-color: #f0a500;
         }
         .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffeb3b;
+            font-size: 1.5em;
+            color: #ff4081;
         }
     </style>
 </head>
 <body>
 
     <div class="summary">
-        <h1>VIX Data Report</h1>
-        <p>取得日時: Sep 2, 3:15:01 PM GMT-5</p>
-        <p>現在のVIX: <span class="highlight">17.17</span> (▲6.51%)</p>
+        <h1>VIX レポート</h1>
+        <p>取得日時: 2023年9月3日 15:15 (GMT-5)</p>
+        <p>現在のVIX: <span class="highlight">16.35</span> (▼4.78%)</p>
     </div>
 
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <p>Dow Jones: <span class="highlight">45,295.81</span> (▼0.55%)</p>
-        <p>S&P 500: <span class="highlight">6,415.54</span> (▼0.69%)</p>
-        <p>Nasdaq: <span class="highlight">21,279.63</span> (▼0.82%)</p>
-    </div>
-
-    <div class="data-section">
-        <h2>VIX トレンド</h2>
+    <div class="chart-container">
         <canvas id="vixChart"></canvas>
     </div>
 
@@ -65,27 +64,76 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['9:00 AM', '11:00 AM', '1:00 PM', '3:00 PM', 'Prev Close'],
                 datasets: [{
                     label: 'VIX',
-                    data: [17.17, 16.50, 15.00, 18.00, 17.00, 12.70], // 仮のデータ
-                    borderColor: '#ff5722',
-                    backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                    data: [16.20, 16.40, 16.60, 16.80, 17.17],
+                    backgroundColor: 'rgba(240, 165, 0, 0.2)',
+                    borderColor: 'rgba(240, 165, 0, 1)',
                     borderWidth: 2,
                     fill: true,
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff',
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItem) {
+                                return tooltipItem[0].label;
+                            }
+                        }
+                    }
+                },
                 scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
                     y: {
-                        beginAtZero: true
+                        ticks: {
+                            color: '#ffffff'
+                        }
                     }
                 }
             }
         });
     </script>
 
+    <h2>市場データ</h2>
+    <table>
+        <tr>
+            <th>指標</th>
+            <th>現在値</th>
+            <th>変動率</th>
+        </tr>
+        <tr>
+            <td>Dow Jones</td>
+            <td>45,271.23</td>
+            <td>-0.054%</td>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>6,448.26</td>
+            <td>+0.51%</td>
+        </tr>
+        <tr>
+            <td>Nasdaq</td>
+            <td>21,497.73</td>
+            <td>+1.02%</td>
+        </tr>
+    </table>
+
+    <footer>
+        <p>データはGoogle Financeから取得されました。</p>
+    </footer>
 </body>
 </html>
 ```
