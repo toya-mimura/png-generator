@@ -9,54 +9,59 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #282c34;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #f0a500;
+            text-align: center;
         }
-        .summary {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #f0a500;
-            border-radius: 5px;
+        #summary {
+            margin-bottom: 30px;
         }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            max-width: 800px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #444;
-        }
-        th {
-            background-color: #f0a500;
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #3a3f47;
+            border-radius: 8px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ff4081;
+            color: #ffcc00;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .highlight {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: 2023年9月3日 15:15 (GMT-5)</p>
-        <p>現在のVIX: <span class="highlight">16.35</span> (▼4.78%)</p>
+    <h1>VIX レポート</h1>
+    <div id="summary">
+        <h2>概要</h2>
+        <p>VIXの現在の値は <span class="highlight">15.30</span> で、前日比 <span class="highlight">▼6.42%</span> です。</p>
     </div>
 
-    <div class="chart-container">
+    <div class="section">
+        <h2>VIXの動向</h2>
         <canvas id="vixChart"></canvas>
+    </div>
+
+    <div class="section">
+        <h2>重要な指標</h2>
+        <p>前日終値: <span class="highlight">16.35</span></p>
+        <p>日レンジ: <span class="highlight">15.28 - 16.35</span></p>
+        <p>年レンジ: <span class="highlight">12.70 - 60.13</span></p>
+        <p>取得日時: <span class="highlight">Sep 4, 3:15:01 PM GMT-5</span></p>
     </div>
 
     <script>
@@ -64,76 +69,27 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['9:00 AM', '11:00 AM', '1:00 PM', '3:00 PM', 'Prev Close'],
+                labels: ['1D', '5D', '1M', '6M', 'YTD'],
                 datasets: [{
                     label: 'VIX',
-                    data: [16.20, 16.40, 16.60, 16.80, 17.17],
-                    backgroundColor: 'rgba(240, 165, 0, 0.2)',
-                    borderColor: 'rgba(240, 165, 0, 1)',
+                    data: [16.35, 15.80, 14.50, 16.00, 15.30],
+                    backgroundColor: 'rgba(255, 204, 0, 0.5)',
+                    borderColor: 'rgba(255, 204, 0, 1)',
                     borderWidth: 2,
-                    fill: true,
+                    fill: true
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff',
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            title: function(tooltipItem) {
-                                return tooltipItem[0].label;
-                            }
-                        }
-                    }
-                },
                 scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    },
                     y: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
+                        beginAtZero: false
                     }
                 }
             }
         });
     </script>
 
-    <h2>市場データ</h2>
-    <table>
-        <tr>
-            <th>指標</th>
-            <th>現在値</th>
-            <th>変動率</th>
-        </tr>
-        <tr>
-            <td>Dow Jones</td>
-            <td>45,271.23</td>
-            <td>-0.054%</td>
-        </tr>
-        <tr>
-            <td>S&P 500</td>
-            <td>6,448.26</td>
-            <td>+0.51%</td>
-        </tr>
-        <tr>
-            <td>Nasdaq</td>
-            <td>21,497.73</td>
-            <td>+1.02%</td>
-        </tr>
-    </table>
-
-    <footer>
-        <p>データはGoogle Financeから取得されました。</p>
-    </footer>
 </body>
 </html>
 ```
