@@ -9,129 +9,130 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background-color: #121212;
             color: #ffffff;
+            margin: 0;
+            padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #00bcd4;
+        h1, h2 {
+            color: #ffcc00;
         }
         .summary {
             margin-bottom: 20px;
-            text-align: center;
-        }
-        .data-section {
-            margin: 20px 0;
-        }
-        .data-title {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #ffeb3b;
         }
         .highlight {
-            font-size: 2em;
-            color: #f44336;
+            font-size: 24px;
+            color: #ffcc00;
+            font-weight: bold;
         }
         .chart-container {
             position: relative;
             height: 40vh;
             width: 80vw;
+            max-width: 1200px;
             margin: auto;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
         th, td {
-            padding: 10px;
-            border: 1px solid #444;
+            border: 1px solid #ffffff;
+            padding: 8px;
             text-align: center;
         }
         th {
-            background-color: #333;
-        }
-        @media (max-width: 600px) {
-            .chart-container {
-                width: 100%;
-            }
+            background-color: #1e1e1e;
         }
     </style>
 </head>
 <body>
 
-    <h1>VIX レポート</h1>
     <div class="summary">
-        <p>データ取得日時: <strong>2023年9月5日 15:15 (GMT-5)</strong></p>
-        <p>現在のVIX: <span class="highlight">15.18</span> (▼0.78%)</p>
+        <h1>VIX レポート</h1>
+        <p>取得日時: <span class="highlight">Sep 8, 3:15:01 PM GMT-5</span></p>
+        <p>現在のVIX: <span class="highlight">15.11</span> (▼0.46%)</p>
     </div>
 
-    <div class="data-section">
-        <div class="data-title">VIXの詳細</div>
-        <table>
-            <tr>
-                <th>項目</th>
-                <th>値</th>
-            </tr>
-            <tr>
-                <td>前日終値</td>
-                <td>15.30</td>
-            </tr>
-            <tr>
-                <td>日変動範囲</td>
-                <td>14.74 - 16.92</td>
-            </tr>
-            <tr>
-                <td>年間変動範囲</td>
-                <td>12.70 - 60.13</td>
-            </tr>
-        </table>
+    <h2>VIXのトレンド</h2>
+    <div class="chart-container">
+        <canvas id="vixChart"></canvas>
     </div>
 
-    <div class="data-section">
-        <div class="data-title">VIXの歴史的トレンド</div>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
-    </div>
+    <h2>主要な指標</h2>
+    <table>
+        <tr>
+            <th>指標</th>
+            <th>値</th>
+            <th>変動率</th>
+        </tr>
+        <tr>
+            <td>ダウ・ジョーンズ</td>
+            <td>45,514.95</td>
+            <td>+0.25%</td>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>6,495.15</td>
+            <td>+0.21%</td>
+        </tr>
+        <tr>
+            <td>ナスダック</td>
+            <td>21,798.70</td>
+            <td>+0.45%</td>
+        </tr>
+        <tr>
+            <td>VIX</td>
+            <td>15.11</td>
+            <td>▼0.46%</td>
+        </tr>
+    </table>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['Sep 1', 'Sep 2', 'Sep 3', 'Sep 4', 'Sep 5', 'Sep 6', 'Sep 7', 'Sep 8'],
                 datasets: [{
                     label: 'VIX',
-                    data: [15.18, 16.00, 14.50, 15.75, 20.00, 18.50], // 仮のデータ
-                    borderColor: '#00bcd4',
-                    backgroundColor: 'rgba(0, 188, 212, 0.2)',
-                    borderWidth: 2,
-                    fill: true
+                    data: [15.18, 15.15, 15.20, 15.10, 15.05, 15.00, 15.12, 15.11],
+                    borderColor: '#ffcc00',
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'VIX値'
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
                         }
                     },
+                    tooltip: {
+                        bodyColor: '#ffffff',
+                        titleColor: '#ffcc00'
+                    }
+                },
+                scales: {
                     x: {
-                        title: {
-                            display: true,
-                            text: '期間'
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
                         }
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
