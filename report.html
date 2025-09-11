@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
+    <title>VIX データレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -14,51 +14,61 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #76ff03;
+        h1, h2 {
+            color: #f0a500;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
         }
         .summary {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
-        .data-section {
-            margin: 20px 0;
-            border: 1px solid #444;
+        .section {
+            margin-bottom: 30px;
+            background-color: #1e1e1e;
             padding: 15px;
             border-radius: 5px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ffeb3b;
+            color: #ff4081;
         }
         canvas {
             max-width: 100%;
         }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
-    <h1>VIX レポート</h1>
-    <div class="summary">
-        <p>本レポートは、VIX（ボラティリティ指数）の最新データを示しています。取得日時は <strong>Sep 9, 3:15:01 PM GMT-5</strong> です。</p>
-    </div>
+    <div class="container">
+        <div class="summary">
+            <h1>VIX データレポート</h1>
+            <p>取得日時: 2023年9月10日 15:15 (GMT-5)</p>
+            <p>現在のVIX: <span class="highlight">15.35</span> (▲2.06%)</p>
+        </div>
 
-    <div class="data-section">
-        <h2>VIX インデックスデータ</h2>
-        <p>現在のVIX値: <span class="highlight">15.04</span></p>
-        <p>変化率: <span class="highlight">▼0.46%</span></p>
-        <p>前日終値: <span class="highlight">15.11</span></p>
-        <p>日レンジ: <span class="highlight">14.97 - 15.82</span></p>
-        <p>年レンジ: <span class="highlight">12.70 - 60.13</span></p>
-    </div>
+        <div class="section">
+            <h2>市場インデックス</h2>
+            <p>ダウジョーンズ: 45,490.92 (▼0.48%)</p>
+            <p>S&P 500: 6,532.04 (▲0.30%)</p>
+            <p>ナスダック: 21,886.06 (▲0.030%)</p>
+        </div>
 
-    <div class="data-section">
-        <h2>VIX トレンドチャート</h2>
-        <canvas id="vixChart"></canvas>
+        <div class="section">
+            <h2>VIXのトレンド</h2>
+            <canvas id="vixChart"></canvas>
+        </div>
+
+        <div class="section">
+            <h2>VIXの詳細</h2>
+            <p>前日終値: 15.04</p>
+            <p>日中の高低: 14.63 - 15.63</p>
+            <p>52週の高低: 12.70 - 60.13</p>
+            <p>VIXとは、S&P 500のオプションに基づくボラティリティ指数です。</p>
+        </div>
     </div>
 
     <script>
@@ -66,24 +76,25 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['前日', '今日'],
                 datasets: [{
-                    label: 'VIX 値',
-                    data: [15.04, 14.50, 16.00, 14.80, 15.20, 12.70], // サンプルデータ
-                    backgroundColor: 'rgba(118, 255, 3, 0.2)',
-                    borderColor: 'rgba(118, 255, 3, 1)',
+                    label: 'VIX',
+                    data: [15.04, 15.35],
+                    borderColor: 'rgba(255, 64, 129, 1)',
+                    backgroundColor: 'rgba(255, 64, 129, 0.2)',
                     borderWidth: 2,
                     fill: true
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                         title: {
                             display: true,
-                            text: 'VIX 値'
+                            text: 'VIX値'
                         }
                     }
                 }
