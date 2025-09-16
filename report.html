@@ -4,81 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX データレポート</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>VIX レポート</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #f39c12;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .summary, .data-section {
+            background-color: #2c3e50;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #e74c3c;
+        }
+        canvas {
+            max-width: 100%;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
         }
         table, th, td {
-            border: 1px solid #ffffff;
+            border: 1px solid #34495e;
         }
         th, td {
             padding: 10px;
             text-align: center;
         }
-        .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
-        }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            height: 40vh;
-            width: 80vw;
+        th {
+            background-color: #2980b9;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <div class="container">
+        <h1>VIX レポート</h1>
+        <div class="summary">
+            <h2>概要</h2>
+            <p>現在のVIX: <span class="highlight">15.69</span> (▲<span class="highlight">6.30%</span>)</p>
+            <p>取得日時: <span class="highlight">Sep 15, 3:15:01 PM GMT-5</span></p>
+        </div>
 
-    <h1>VIX データレポート</h1>
-    <p>取得日時: 2023年9月12日 15:15 (GMT-5)</p>
-    <h2>概要</h2>
-    <p>VIX（恐怖指数）は、S&P 500オプションに基づくボラティリティの期待を示す指標です。現在の値は <span class="highlight">14.76</span> で、前日比 <span class="highlight">+0.34%</span> の上昇です。</p>
+        <div class="data-section">
+            <h2>市場インデックス</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>インデックス名</th>
+                        <th>値</th>
+                        <th>変化率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dow Jones</td>
+                        <td>45,883.45</td>
+                        <td>+0.11%</td>
+                    </tr>
+                    <tr>
+                        <td>S&P 500</td>
+                        <td>6,615.28</td>
+                        <td>+0.47%</td>
+                    </tr>
+                    <tr>
+                        <td>Nasdaq</td>
+                        <td>22,348.75</td>
+                        <td>+0.94%</td>
+                    </tr>
+                    <tr>
+                        <td>Russell</td>
+                        <td>2,405.13</td>
+                        <td>+0.34%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <h2>VIX データ</h2>
-    <table>
-        <tr>
-            <th>指標</th>
-            <th>値</th>
-        </tr>
-        <tr>
-            <td>現在のVIX</td>
-            <td class="highlight">14.76</td>
-        </tr>
-        <tr>
-            <td>前日比</td>
-            <td class="highlight">+0.34%</td>
-        </tr>
-        <tr>
-            <td>前回の終値</td>
-            <td>14.71</td>
-        </tr>
-        <tr>
-            <td>日中の範囲</td>
-            <td>14.41 - 14.97</td>
-        </tr>
-        <tr>
-            <td>52週の範囲</td>
-            <td>12.70 - 60.13</td>
-        </tr>
-    </table>
-
-    <h2>VIX トレンド</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
+        <div class="data-section">
+            <h2>VIXのトレンド</h2>
+            <canvas id="vixChart"></canvas>
+        </div>
     </div>
 
     <script>
@@ -86,36 +106,36 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['日1', '日2', '日3', '日4', '日5'], // ダミーラベル
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
                 datasets: [{
-                    label: 'VIX トレンド',
-                    data: [14.71, 14.72, 14.80, 14.75, 14.76], // ダミーデータ
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
-                    borderWidth: 2
+                    label: 'VIX',
+                    data: [14.76, 15.00, 15.30, 14.50, 16.00, 15.50], // サンプルデータ
+                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    borderWidth: 2,
+                    fill: true
                 }]
             },
             options: {
-                responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'VIX 値'
-                        }
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
                     },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '日'
-                        }
+                    title: {
+                        display: true,
+                        text: 'VIXトレンド'
                     }
                 }
             }
         });
     </script>
-
 </body>
 </html>
 ```
