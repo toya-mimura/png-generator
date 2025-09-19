@@ -4,158 +4,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX データレポート</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2c2c2c;
-            color: white;
+            background-color: #121212;
+            color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #f1c40f;
+            color: #bb86fc;
         }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-        }
-        .summary {
-            background-color: #1abc9c;
-            padding: 15px;
+        .summary, .data-section {
+            margin-bottom: 30px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            background-color: #1e1e1e;
         }
         .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e74c3c;
+            font-size: 1.5em;
+            color: #ffeb3b;
         }
-        .chart-container {
-            position: relative;
-            height: 40vh;
-            width: 80vw;
-            margin: auto;
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #fff;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #34495e;
+        canvas {
+            max-width: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="summary">
-            <h1>VIX データレポート</h1>
-            <p>取得日時: <span class="highlight">Sep 17, 3:15:01 PM GMT-5</span></p>
-            <p>現在のVIX: <span class="highlight">15.72</span> (▼<span class="highlight">3.91%</span>)</p>
-        </div>
 
-        <h2>VIXの詳細</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
+    <div class="summary">
+        <h1>VIX レポート</h1>
+        <p>取得日時: <strong>Sep 18, 3:15:01 PM GMT-5</strong></p>
+        <p>現在のVIX値: <span class="highlight">15.70</span> (▼0.13%)</p>
+    </div>
 
+    <div class="data-section">
         <h2>市場データ</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>指標</th>
-                    <th>現在の値</th>
-                    <th>変動率</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Dow Jones</td>
-                    <td>46,018.32</td>
-                    <td>+0.57%</td>
-                </tr>
-                <tr>
-                    <td>S&P 500</td>
-                    <td>6,600.35</td>
-                    <td>-0.097%</td>
-                </tr>
-                <tr>
-                    <td>Nasdaq</td>
-                    <td>22,261.33</td>
-                    <td>-0.33%</td>
-                </tr>
-                <tr>
-                    <td>Russell 2000</td>
-                    <td>2,407.34</td>
-                    <td>+0.18%</td>
-                </tr>
-            </tbody>
-        </table>
+        <p>Dow Jones: 46,142.42 (+0.27%)</p>
+        <p>S&P 500: 6,631.96 (+0.48%)</p>
+        <p>Nasdaq: 22,470.73 (+0.94%)</p>
+        <p>Russell: 2,467.70 (+2.51%)</p>
+    </div>
 
-        <h2>VIXのトレンド</h2>
-        <p>VIXの最近のトレンドをグラフで表示します。</p>
-        <script>
-            const ctx = document.getElementById('vixChart').getContext('2d');
-            const vixChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['1日', '5日', '1月', '6月', 'YTD', '1年', '5年'],
-                    datasets: [{
-                        label: 'VIXの動き',
-                        data: [16.36, 15.50, 14.75, 17.00, 15.80, 18.00, 12.70],
-                        borderColor: '#f1c40f',
-                        backgroundColor: 'rgba(241, 196, 15, 0.5)',
-                        borderWidth: 2,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: 'white'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#2c3e50',
-                            titleColor: 'white',
-                            bodyColor: 'white'
+    <div class="data-section">
+        <h2>VIX トレンド</h2>
+        <canvas id="vixChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                datasets: [{
+                    label: 'VIX値',
+                    data: [15.70, 16.00, 17.00, 18.00, 15.50, 14.00], // 仮のデータ
+                    borderColor: '#bb86fc',
+                    backgroundColor: 'rgba(187, 134, 252, 0.2)',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
                         }
                     },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: '#34495e'
-                            },
-                            ticks: {
-                                color: 'white'
-                            }
+                    tooltip: {
+                        bodyColor: '#ffffff',
+                        titleColor: '#bb86fc'
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
                         },
-                        y: {
-                            grid: {
-                                color: '#34495e'
-                            },
-                            ticks: {
-                                color: 'white'
-                            }
+                        grid: {
+                            color: '#444444'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: '#444444'
                         }
                     }
                 }
-            });
-        </script>
-    </div>
+            }
+        });
+    </script>
+
 </body>
 </html>
 ```
