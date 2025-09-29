@@ -4,105 +4,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
+    <title>VIXデータレポート</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1, h2 {
-            color: #f0a500;
+        h1, h2, h3 {
+            color: #ffcc00;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
         }
         .summary {
-            background-color: #2e2e2e;
-            padding: 15px;
-            border-radius: 8px;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
+        .data-section {
+            margin-bottom: 40px;
+        }
         .highlight {
-            font-size: 1.5em;
-            color: #ff4081;
+            font-size: 24px;
+            color: #ffcc00;
         }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            height: 40vh;
-            width: 80vw;
+        canvas {
+            max-width: 100%;
+            height: auto;
         }
-        @media (max-width: 600px) {
-            .chart-container {
-                width: 100%;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #2a2a2a;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #888888;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="summary">
+            <h1>VIXデータレポート</h1>
+            <p>取得日時: <strong>Sep 26, 3:15:01 PM GMT-5</strong></p>
+            <p class="highlight">現在のVIX値: <strong>15.29 (▼8.66%)</strong></p>
+        </div>
 
-    <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: <strong>Sep 26, 3:15:01 PM GMT-5</strong></p>
-        <p>現在のVIX: <span class="highlight">15.29</span> (<span class="highlight">▼8.66%</span>)</p>
-    </div>
-
-    <h2>市場の動向</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
-    </div>
-
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
-                datasets: [{
-                    label: 'VIX',
-                    data: [16.74, 15.50, 14.30, 18.00, 17.50, 15.29],
-                    borderColor: '#ff4081',
-                    backgroundColor: 'rgba(255, 64, 129, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
-                        }
+        <div class="data-section">
+            <h2>VIXの詳細情報</h2>
+            <canvas id="vixChart"></canvas>
+            <script>
+                const ctx = document.getElementById('vixChart').getContext('2d');
+                const vixChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['前日', '本日'],
+                        datasets: [{
+                            label: 'VIX値',
+                            data: [16.74, 15.29],
+                            backgroundColor: 'rgba(255, 204, 0, 0.5)',
+                            borderColor: '#ffcc00',
+                            borderWidth: 2,
+                            fill: true
+                        }]
                     },
-                    tooltip: {
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: '#ffffff'
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: '#ffffff'
+                                }
+                            }
                         },
-                        grid: {
-                            color: '#444444'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
-                        },
-                        grid: {
-                            color: '#444444'
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#ffffff'
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
-    </script>
+                });
+            </script>
+        </div>
+
+        <div class="data-section">
+            <h2>市場のインデックス</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>インデックス</th>
+                        <th>現在の値</th>
+                        <th>変動率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ダウ平均</td>
+                        <td>46,247.29</td>
+                        <td>+0.65%</td>
+                    </tr>
+                    <tr>
+                        <td>S&P 500</td>
+                        <td>6,643.70</td>
+                        <td>+0.59%</td>
+                    </tr>
+                    <tr>
+                        <td>ナスダック</td>
+                        <td>22,484.07</td>
+                        <td>+0.44%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>このデータは情報提供の目的で提供されており、投資アドバイスではありません。</p>
+        </div>
+    </div>
 </body>
 </html>
 ```
