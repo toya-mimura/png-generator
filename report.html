@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXデータレポート</title>
+    <title>VIXレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -14,65 +14,75 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2 {
-            color: #ffcc00;
+        h1, h2, h3 {
+            color: #FF9800;
         }
-        .summary {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
+        .container {
+            max-width: 1200px;
+            margin: auto;
         }
-        .data-section {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
+        .summary, .data-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #1E1E1E;
+            border-radius: 8px;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #FFEB3B;
         }
         canvas {
             max-width: 100%;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        table, th, td {
-            border: 1px solid #ffffff;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ffcc00;
-            color: #000000;
-        }
-        .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="summary">
+            <h1>VIXレポート</h1>
+            <p>取得日時: <strong>2023年10月1日 3:15 PM GMT-5</strong></p>
+            <p>現在のVIX: <span class="highlight">16.29 (▲0.061%)</span></p>
+        </div>
+        
+        <div class="data-section">
+            <h2>VIXのトレンド</h2>
+            <canvas id="vixTrendChart"></canvas>
+        </div>
 
-    <h1>VIXデータレポート</h1>
-    <div class="summary">
-        <h2>概要</h2>
-        <p>VIX（ボラティリティ指数）は、S&P 500オプションに基づく市場の期待するボラティリティを示します。現在のVIXは、<span class="highlight">16.28</span>で、<span class="highlight">▲0.99%</span>の変動があります。</p>
-        <p>取得日時: 2023年9月30日 15:15 (GMT-5)</p>
-    </div>
-
-    <div class="data-section">
-        <h2>VIXの詳細</h2>
-        <p>前回の終値: <span class="highlight">16.12</span></p>
-        <p>日中の範囲: <span class="highlight">16.02 - 16.70</span></p>
-        <p>年間の範囲: <span class="highlight">12.70 - 60.13</span></p>
-    </div>
-
-    <div class="data-section">
-        <h2>VIXのトレンド</h2>
-        <canvas id="vixTrendChart"></canvas>
+        <div class="data-section">
+            <h2>関連市場の情報</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #444; padding: 8px;">市場名</th>
+                        <th style="border: 1px solid #444; padding: 8px;">現在の値</th>
+                        <th style="border: 1px solid #444; padding: 8px;">変動率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #444; padding: 8px;">Dow Jones</td>
+                        <td style="border: 1px solid #444; padding: 8px;">46,441.10</td>
+                        <td style="border: 1px solid #444; padding: 8px;">+0.093%</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #444; padding: 8px;">S&P 500</td>
+                        <td style="border: 1px solid #444; padding: 8px;">6,711.20</td>
+                        <td style="border: 1px solid #444; padding: 8px;">+0.34%</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #444; padding: 8px;">Nasdaq</td>
+                        <td style="border: 1px solid #444; padding: 8px;">22,755.16</td>
+                        <td style="border: 1px solid #444; padding: 8px;">+0.42%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -80,12 +90,12 @@
         const vixTrendChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['9:00 AM', '11:00 AM', '1:00 PM', '3:00 PM'],
                 datasets: [{
                     label: 'VIX値',
-                    data: [16.28, 15.50, 14.80, 18.00, 15.50, 20.00],
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    data: [16.20, 16.10, 16.29, 16.29],
+                    backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                    borderColor: 'rgba(255, 152, 0, 1)',
                     borderWidth: 2,
                     fill: true,
                 }]
@@ -94,33 +104,29 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: {
-                            color: '#444'
-                        },
-                        ticks: {
-                            color: '#ffffff'
+                        title: {
+                            display: true,
+                            text: 'VIX値'
                         }
                     },
                     x: {
-                        grid: {
-                            color: '#444'
-                        },
-                        ticks: {
-                            color: '#ffffff'
+                        title: {
+                            display: true,
+                            text: '時間'
                         }
                     }
                 },
                 plugins: {
                     legend: {
+                        display: true,
                         labels: {
-                            color: '#ffffff'
+                            color: '#FFFFFF'
                         }
                     }
                 }
             }
         });
     </script>
-
 </body>
 </html>
 ```
