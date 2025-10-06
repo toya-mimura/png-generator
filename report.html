@@ -14,117 +14,92 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            font-size: 2em;
+        h1, h2 {
+            color: #bb86fc;
         }
         .summary {
-            text-align: center;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 20px;
-        }
-        .highlight {
-            font-size: 1.5em;
-            color: #ff4081;
-        }
-        .section {
-            margin: 20px 0;
-            border: 1px solid #444;
-            padding: 10px;
-            border-radius: 8px;
         }
         .chart-container {
             position: relative;
-            height: 40vh;
-            width: 80vw;
+            margin: auto;
             max-width: 600px;
-            margin: 0 auto;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #03dac6;
         }
         table {
             width: 100%;
-            margin: 20px 0;
             border-collapse: collapse;
+            margin: 20px 0;
         }
         th, td {
-            padding: 10px;
             border: 1px solid #444;
+            padding: 10px;
             text-align: center;
         }
         th {
             background-color: #333;
         }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.8em;
-        }
     </style>
 </head>
 <body>
-    <h1>VIX レポート</h1>
     <div class="summary">
-        <p>取得日時: <span class="highlight">2023年10月3日 15:15 GMT-5</span></p>
-        <p>現在のVIX: <span class="highlight">16.65 (▲0.12%)</span></p>
+        <h1>VIX レポート</h1>
+        <p>取得日時: <span class="highlight">2023年10月3日 15:15 (GMT-5)</span></p>
+        <p>現在のVIX値: <span class="highlight">16.65</span> (▲0.12%)</p>
     </div>
 
-    <div class="section">
-        <h2>VIXの動向</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
+    <h2>市場のトレンド</h2>
+    <div class="chart-container">
+        <canvas id="vixChart"></canvas>
     </div>
 
-    <div class="section">
-        <h2>主要指標</h2>
-        <table>
+    <h2>関連データ</h2>
+    <table>
+        <thead>
             <tr>
-                <th>指標</th>
-                <th>値</th>
-                <th>変動</th>
+                <th>インデックス</th>
+                <th>現在値</th>
+                <th>変動率</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
-                <td>ダウ平均</td>
-                <td>46,758.28</td>
-                <td>+0.51%</td>
+                <td>Dow Jones</td>
+                <td class="highlight">46,758.28</td>
+                <td class="highlight">+0.51%</td>
             </tr>
             <tr>
                 <td>S&P 500</td>
-                <td>6,715.79</td>
-                <td>+0.0066%</td>
+                <td class="highlight">6,715.79</td>
+                <td class="highlight">+0.0066%</td>
             </tr>
             <tr>
-                <td>ナスダック</td>
-                <td>22,780.51</td>
-                <td>-0.28%</td>
+                <td>Nasdaq</td>
+                <td class="highlight">22,780.51</td>
+                <td class="highlight">-0.28%</td>
             </tr>
-            <tr>
-                <td>Russell 2000</td>
-                <td>2,476.18</td>
-                <td>+0.72%</td>
-            </tr>
-            <tr>
-                <td>VIX</td>
-                <td>16.65</td>
-                <td>+0.12%</td>
-            </tr>
-        </table>
-    </div>
-
-    <footer>
-        <p>すべてのデータは情報提供の目的のみであり、投資アドバイスではありません。</p>
-    </footer>
+        </tbody>
+    </table>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['09:00', '11:00', '13:00', '15:00'],
+                labels: ['9:00 AM', '11:00 AM', '1:00 PM', '3:00 PM'],
                 datasets: [{
-                    label: 'VIX',
+                    label: 'VIX値',
                     data: [16.20, 16.40, 16.60, 16.65],
-                    fill: false,
-                    borderColor: 'rgba(255, 105, 180, 1)',
-                    tension: 0.1
+                    borderColor: '#bb86fc',
+                    backgroundColor: 'rgba(187, 134, 252, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
                 }]
             },
             options: {
@@ -134,7 +109,7 @@
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'VIX 値'
+                            text: 'VIX値'
                         }
                     },
                     x: {
