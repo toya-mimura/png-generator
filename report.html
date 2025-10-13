@@ -4,68 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXレポート</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>VIX レポート</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2c2c2c;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1, h2, h3 {
-            color: #f0ad4e;
+        h1 {
+            text-align: center;
         }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-        }
-        .summary, .section {
+        .summary {
+            text-align: center;
             margin-bottom: 20px;
-            padding: 20px;
-            background-color: #3c3c3c;
-            border-radius: 8px;
+        }
+        .data-section {
+            margin: 20px 0;
         }
         .highlight {
             font-size: 1.5em;
-            color: #d9534f;
+            color: #bb86fc;
         }
-        canvas {
-            max-width: 100%;
+        .chart-container {
+            position: relative;
+            margin: auto;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #1f1f1f;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .highlight {
+                font-size: 1.2em;
+            }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="summary">
-            <h1>VIXレポート</h1>
-            <p>取得日時: <strong>2023年10月10日 3:15 PM GMT-5</strong></p>
-            <p>VIXの現在の値は <span class="highlight">21.66</span> で、前日比 <span class="highlight">+31.83%</span> です。</p>
-        </div>
-        
-        <div class="section">
-            <h2>VIXの動向</h2>
+
+    <h1>VIX レポート</h1>
+    <div class="summary">
+        <p>取得日時: <strong>2023年10月10日 3:15 PM GMT-5</strong></p>
+        <p>VIX: <span class="highlight">21.66 (▲31.83%)</span></p>
+    </div>
+
+    <div class="data-section">
+        <h2>市場データ</h2>
+        <table>
+            <tr>
+                <th>指標</th>
+                <th>現在値</th>
+                <th>変化率</th>
+            </tr>
+            <tr>
+                <td>Dow Jones</td>
+                <td>45,479.60</td>
+                <td>-1.90%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,552.51</td>
+                <td>-2.71%</td>
+            </tr>
+            <tr>
+                <td>Nasdaq</td>
+                <td>22,204.43</td>
+                <td>-3.56%</td>
+            </tr>
+            <tr>
+                <td>VIX</td>
+                <td>21.66</td>
+                <td>+31.83%</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="data-section">
+        <h2>VIX トレンド</h2>
+        <div class="chart-container">
             <canvas id="vixChart"></canvas>
-        </div>
-        
-        <div class="section">
-            <h2>関連インデックス</h2>
-            <ul>
-                <li>ダウ・ジョーンズ: <strong>45,479.60</strong> (▲1.90%)</li>
-                <li>S&P 500: <strong>6,552.51</strong> (▲2.71%)</li>
-                <li>ナスダック: <strong>22,204.43</strong> (▲3.56%)</li>
-                <li>ラッセル2000: <strong>2,394.60</strong> (▲3.01%)</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>最近のニュース</h2>
-            <ul>
-                <li>VIXが20を超える - トランプの関税脅威</li>
-                <li>米国株が大幅に下落 - VIX指数が急上昇</li>
-                <li>市場は冷静を保てるのか？ - 感情指数の動向</li>
-            </ul>
         </div>
     </div>
 
@@ -76,19 +112,19 @@
             data: {
                 labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
                 datasets: [{
-                    label: 'VIXの動向',
-                    data: [16.43, 18.00, 19.00, 20.00, 21.66, 21.00],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    label: 'VIX Index',
+                    data: [16.43, 18.20, 20.50, 19.80, 21.00, 21.66],
+                    borderColor: '#bb86fc',
+                    backgroundColor: 'rgba(187, 134, 252, 0.2)',
                     borderWidth: 2,
-                    fill: true
+                    fill: true,
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: false
                     }
                 }
             }
