@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>VIX データレポート</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,122 +14,140 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        h1, h2 {
+            color: #00bcd4;
         }
         .summary {
-            text-align: center;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
-        .data-section {
-            margin: 20px 0;
-        }
         .highlight {
-            font-size: 1.5em;
-            color: #bb86fc;
+            font-size: 24px;
+            color: #ff4081;
+            font-weight: bold;
         }
         .chart-container {
             position: relative;
             margin: auto;
-            max-width: 800px;
+            height: 40vh;
+            width: 80vw;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 20px;
+            background-color: #1e1e1e;
         }
         table, th, td {
-            border: 1px solid #333;
+            border: 1px solid #444;
         }
         th, td {
             padding: 10px;
             text-align: center;
         }
         th {
-            background-color: #1f1f1f;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .highlight {
-                font-size: 1.2em;
-            }
+            background-color: #333;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <div class="container">
+        <h1>VIX データレポート</h1>
+        <div class="summary">
+            <h2>概要</h2>
+            <p>現在のVIX指数: <span class="highlight">19.03</span> (▼12.14%)</p>
+            <p>取得日時: <strong>2023年10月13日 15:15 GMT-5</strong></p>
+        </div>
 
-    <h1>VIX レポート</h1>
-    <div class="summary">
-        <p>取得日時: <strong>2023年10月10日 3:15 PM GMT-5</strong></p>
-        <p>VIX: <span class="highlight">21.66 (▲31.83%)</span></p>
-    </div>
-
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <table>
-            <tr>
-                <th>指標</th>
-                <th>現在値</th>
-                <th>変化率</th>
-            </tr>
-            <tr>
-                <td>Dow Jones</td>
-                <td>45,479.60</td>
-                <td>-1.90%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,552.51</td>
-                <td>-2.71%</td>
-            </tr>
-            <tr>
-                <td>Nasdaq</td>
-                <td>22,204.43</td>
-                <td>-3.56%</td>
-            </tr>
-            <tr>
-                <td>VIX</td>
-                <td>21.66</td>
-                <td>+31.83%</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="data-section">
-        <h2>VIX トレンド</h2>
         <div class="chart-container">
             <canvas id="vixChart"></canvas>
         </div>
-    </div>
+        
+        <h2>市場の動向</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>指数</th>
+                    <th>現在の値</th>
+                    <th>変化率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>S&P 500</td>
+                    <td>6,654.72</td>
+                    <td>+1.56%</td>
+                </tr>
+                <tr>
+                    <td>Dow Jones</td>
+                    <td>46,067.58</td>
+                    <td>+1.29%</td>
+                </tr>
+                <tr>
+                    <td>Nasdaq</td>
+                    <td>22,694.61</td>
+                    <td>+2.21%</td>
+                </tr>
+                <tr>
+                    <td>Russell 2000</td>
+                    <td>2,461.42</td>
+                    <td>+2.79%</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
-                datasets: [{
-                    label: 'VIX Index',
-                    data: [16.43, 18.20, 20.50, 19.80, 21.00, 21.66],
-                    borderColor: '#bb86fc',
-                    backgroundColor: 'rgba(187, 134, 252, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: false
+        <script>
+            const ctx = document.getElementById('vixChart').getContext('2d');
+            const vixChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['前日', '今日'],
+                    datasets: [{
+                        label: 'VIX 値',
+                        data: [21.66, 19.03],
+                        backgroundColor: 'rgba(0, 188, 212, 0.2)',
+                        borderColor: 'rgba(0, 188, 212, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#333',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    </div>
 </body>
 </html>
 ```
