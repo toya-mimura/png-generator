@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX Data Report</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>VIXレポート</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,133 +15,111 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
+            color: #e0e0e0;
         }
         .summary {
+            margin-bottom: 20px;
+            padding: 15px;
             background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
+            border-radius: 5px;
         }
         .chart-container {
             position: relative;
-            margin: 30px 0;
+            height: 40vh;
+            width: 80vw;
+            margin: auto;
+        }
+        .data-section {
+            margin-bottom: 40px;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 5px;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #ff9800;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid #444;
-        }
         th, td {
+            border: 1px solid #444;
             padding: 10px;
             text-align: center;
         }
         th {
             background-color: #333;
         }
-        .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
+        @media (max-width: 600px) {
+            .chart-container {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>VIX Data Report</h1>
-        <div class="summary">
-            <h2>概要</h2>
-            <p>現在のVIX指数は<span class="highlight">20.81</span>で、前日比<span class="highlight">+9.35%</span>（<span class="highlight">+1.78</span>）の上昇です。</p>
-            <p>取得日時: <strong>Oct 14, 3:15:01 PM GMT-5</strong></p>
-        </div>
 
-        <h2>VIXトレンド</h2>
+    <h1>VIXレポート</h1>
+    <div class="summary">
+        <h2>概要</h2>
+        <p>現在のVIX: <span class="highlight">20.64</span> (▼0.82%)</p>
+        <p>取得日時: <strong>Oct 15, 3:15:01 PM GMT-5</strong></p>
+    </div>
+
+    <div class="data-section">
+        <h2>VIXのデータ</h2>
         <div class="chart-container">
             <canvas id="vixChart"></canvas>
         </div>
-
-        <h2>関連データ</h2>
         <table>
-            <thead>
-                <tr>
-                    <th>指数</th>
-                    <th>現在値</th>
-                    <th>前日比</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Dow Jones</td>
-                    <td>46,270.46</td>
-                    <td>+0.44%</td>
-                </tr>
-                <tr>
-                    <td>S&P 500</td>
-                    <td>6,644.31</td>
-                    <td>-0.16%</td>
-                </tr>
-                <tr>
-                    <td>Nasdaq</td>
-                    <td>22,521.70</td>
-                    <td>-0.76%</td>
-                </tr>
-                <tr>
-                    <td>Russell 2000</td>
-                    <td>2,495.50</td>
-                    <td>+1.38%</td>
-                </tr>
-            </tbody>
+            <tr>
+                <th>データ項目</th>
+                <th>値</th>
+            </tr>
+            <tr>
+                <td>前回の終値</td>
+                <td>20.81</td>
+            </tr>
+            <tr>
+                <td>デイレンジ</td>
+                <td>19.11 - 22.44</td>
+            </tr>
+            <tr>
+                <td>年レンジ</td>
+                <td>12.70 - 60.13</td>
+            </tr>
         </table>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['Oct 14', 'Oct 15', 'Oct 16', 'Oct 17', 'Oct 18', 'Oct 19'],
                 datasets: [{
-                    label: 'VIX Index',
-                    data: [19.03, 20.81, 22.00, 18.50, 21.00, 20.00],
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
+                    label: 'VIX Value',
+                    data: [20.81, 20.64, 21.00, 20.50, 20.80, 20.30],
+                    borderColor: '#ff9800',
+                    backgroundColor: 'rgba(255, 152, 0, 0.2)',
                     borderWidth: 2,
-                    fill: true
+                    fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false
-                    }
-                },
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: '期間'
-                        }
-                    },
                     y: {
-                        title: {
-                            display: true,
-                            text: 'VIX値'
-                        }
+                        beginAtZero: false,
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
