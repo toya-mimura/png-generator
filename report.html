@@ -15,94 +15,90 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #f39c12;
+            color: #bb86fc;
         }
-        .summary {
-            background-color: #1e1e1e;
+        .summary, .data-section {
+            margin-bottom: 30px;
+            border: 1px solid #333;
             padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .data-section {
+            border-radius: 8px;
             background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+        }
+        .highlight {
+            font-size: 24px;
+            font-weight: bold;
+            color: #03dac5;
         }
         canvas {
             max-width: 100%;
-        }
-        .highlight {
-            font-size: 1.5em;
-            color: #e74c3c;
         }
     </style>
 </head>
 <body>
 
-    <h1>VIX レポート</h1>
     <div class="summary">
-        <h2>概要</h2>
-        <p>現在のVIX指数は <span class="highlight">20.78</span> です。前日比 <span class="highlight">▼17.90%</span> となっています。</p>
-        <p>取得日時: 2023年10月17日 3:15 PM GMT-5</p>
+        <h1>VIX レポート</h1>
+        <p><strong>取得日時:</strong> 2023年10月20日 15:15 GMT-5</p>
+        <p class="highlight">現在のVIX: 18.23 (▼12.27%)</p>
     </div>
 
     <div class="data-section">
-        <h2>VIXの動向</h2>
+        <h2>市場データ</h2>
+        <p><strong>前日終値:</strong> 20.78</p>
+        <p><strong>日中レンジ:</strong> 18.23 - 21.02</p>
+        <p><strong>年初来レンジ:</strong> 12.70 - 60.13</p>
+    </div>
+
+    <div class="data-section">
+        <h2>VIX トレンドチャート</h2>
         <canvas id="vixChart"></canvas>
-        <script>
-            const ctx = document.getElementById('vixChart').getContext('2d');
-            const vixChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['前日', '当日'],
-                    datasets: [{
-                        label: 'VIX指数',
-                        data: [25.31, 20.78],
-                        backgroundColor: 'rgba(243, 156, 18, 0.2)',
-                        borderColor: 'rgba(243, 156, 18, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'VIX指数'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '日付'
-                            }
+    </div>
+
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10/01', '10/02', '10/03', '10/04', '10/05', '10/06', '10/07', '10/08', '10/09', '10/10', '10/11', '10/12', '10/13', '10/14', '10/15', '10/16', '10/17', '10/18', '10/19', '10/20'],
+                datasets: [{
+                    label: 'VIX',
+                    data: [22, 21, 20, 19, 18.5, 17, 16, 15, 17.5, 18, 19, 20, 21, 22, 23, 24, 23, 22, 21, 18.23],
+                    borderColor: '#bb86fc',
+                    backgroundColor: 'rgba(187, 134, 252, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
                         }
                     },
-                    plugins: {
-                        legend: {
-                            display: true
+                    tooltip: {
+                        backgroundColor: '#1e1e1e',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff'
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
                         }
                     }
                 }
-            });
-        </script>
-    </div>
-
-    <div class="data-section">
-        <h2>関連する市場データ</h2>
-        <p>Dow Jones: <span class="highlight">46,190.61</span> (前日比 +0.52%)</p>
-        <p>S&P 500: <span class="highlight">6,664.01</span> (前日比 +0.53%)</p>
-        <p>Nasdaq: <span class="highlight">22,679.98</span> (前日比 +0.52%)</p>
-        <p>Russell 2000: <span class="highlight">2,452.17</span> (前日比 -0.60%)</p>
-    </div>
-
-    <footer>
-        <p>情報は「as is」で提供されており、投資アドバイスを意図するものではありません。</p>
-    </footer>
+            }
+        });
+    </script>
 
 </body>
 </html>
