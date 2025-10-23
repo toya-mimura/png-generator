@@ -5,98 +5,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIXデータレポート</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: #f39c12;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #ffcc00;
-        }
-        .summary, .section {
-            margin: 20px 0;
+        .summary {
+            background-color: #2c3e50;
             padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 8px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .data-section {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
         .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e67e22;
         }
         canvas {
             max-width: 100%;
-            height: auto;
         }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #7f8c8d;
+        }
+        th {
+            background-color: #2c3e50;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="summary">
+            <h1>VIXデータレポート</h1>
+            <p>取得日時: <span class="highlight">2023年10月22日 15:15 GMT-5</span></p>
+            <p>現在のVIX: <span class="highlight">18.60</span> (▲4.09%)</p>
+        </div>
 
-    <h1>VIXデータレポート</h1>
-    
-    <div class="summary">
-        <h2>概要</h2>
-        <p>取得日時: <span class="highlight">2023年10月21日 15:15 (GMT-5)</span></p>
-        <p>現在のVIX値: <span class="highlight">17.87</span> (<span class="highlight">▼1.97%</span>)</p>
-    </div>
-
-    <div class="section">
-        <h2>VIXトレンド</h2>
-        <canvas id="vixChart"></canvas>
-    </div>
-
-    <div class="section">
-        <h2>関連情報</h2>
-        <p>前回の終値: <span class="highlight">18.23</span></p>
-        <p>日レンジ: <span class="highlight">17.40 - 18.89</span></p>
-        <p>52週レンジ: <span class="highlight">12.70 - 60.13</span></p>
-    </div>
-
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['10/20', '10/21'],
-                datasets: [{
-                    label: 'VIX値',
-                    data: [18.23, 17.87],
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: '日付'
-                        }
+        <div class="data-section">
+            <h2>VIXのパフォーマンス</h2>
+            <canvas id="vixChart"></canvas>
+            <script>
+                const ctx = document.getElementById('vixChart').getContext('2d');
+                const vixChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['前日', '当日'],
+                        datasets: [{
+                            label: 'VIX値',
+                            data: [17.87, 18.60],
+                            backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                            borderColor: 'rgba(243, 156, 18, 1)',
+                            borderWidth: 2,
+                            fill: true,
+                        }]
                     },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'VIX値'
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'VIX値'
+                                }
+                            }
                         },
-                        beginAtZero: false
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: 'white'
+                                }
+                            }
+                        }
                     }
-                }
-            }
-        });
-    </script>
-    
+                });
+            </script>
+        </div>
+
+        <div class="data-section">
+            <h2>関連する市場データ</h2>
+            <table>
+                <tr>
+                    <th>指数名</th>
+                    <th>現在の値</th>
+                    <th>変動率</th>
+                </tr>
+                <tr>
+                    <td>ダウ平均</td>
+                    <td>46,590.41</td>
+                    <td>-0.71%</td>
+                </tr>
+                <tr>
+                    <td>S&P 500</td>
+                    <td>6,699.40</td>
+                    <td>-0.53%</td>
+                </tr>
+                <tr>
+                    <td>ナスダック</td>
+                    <td>22,740.40</td>
+                    <td>-0.93%</td>
+                </tr>
+                <tr>
+                    <td>ラッセル2000</td>
+                    <td>2,451.55</td>
+                    <td>-1.45%</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="data-section">
+            <h2>VIXについて</h2>
+            <p>VIXはCBOEボラティリティインデックスの略称で、S&P 500オプションに基づく株式市場のボラティリティ期待値を測定する指標です。</p>
+        </div>
+    </div>
 </body>
 </html>
 ```
