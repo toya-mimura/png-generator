@@ -4,137 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX Index Report</title>
+    <title>VIXレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
             padding: 20px;
         }
-        h1, h2 {
-            color: #ffffff;
+        h1, h2, h3 {
+            color: #f39c12;
         }
-        .summary {
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #444;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #333;
+        .summary, .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #2c3e50;
         }
         .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
         }
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
-            height: 400px;
-            width: 100%;
+        canvas {
+            max-width: 100%;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>VIX Index Report</h1>
-        <div class="summary">
-            <h2>サマリー</h2>
-            <p>VIXの最新値: <span class="highlight">16.37</span> (▼5.38%)</p>
-            <p>取得日時: <span class="highlight">Oct 24, 3:15:01 PM GMT-5</span></p>
-        </div>
 
-        <h2>指数データ</h2>
-        <table>
-            <tr>
-                <th>指数名</th>
-                <th>最新値</th>
-                <th>変動</th>
-            </tr>
-            <tr>
-                <td>VIX</td>
-                <td class="highlight">16.37</td>
-                <td>▼5.38%</td>
-            </tr>
-            <tr>
-                <td>Dow Jones</td>
-                <td>47,207.12</td>
-                <td>+1.01%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,791.69</td>
-                <td>+0.79%</td>
-            </tr>
-            <tr>
-                <td>Nasdaq</td>
-                <td>23,204.87</td>
-                <td>+1.15%</td>
-            </tr>
-        </table>
-
-        <h2>VIXトレンドグラフ</h2>
-        <div class="chart-container">
-            <canvas id="vixChart"></canvas>
-        </div>
-
-        <h2>VIXについて</h2>
-        <p>VIXはシカゴ・ボード・オプション取引所のCBOEボラティリティ指数の略で、S&P 500指数オプションに基づく市場のボラティリティ期待を測る指標です。</p>
+    <div class="summary">
+        <h1>VIXレポート</h1>
+        <p>取得日時: <span class="highlight">2023年10月24日 3:15 PM GMT-5</span></p>
+        <p>VIX指数: <span class="highlight">16.37</span> (▼5.38%)</p>
     </div>
 
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Oct 20', 'Oct 21', 'Oct 22', 'Oct 23', 'Oct 24'],
-                datasets: [{
-                    label: 'VIX Index',
-                    data: [17.00, 16.80, 17.30, 16.50, 16.37], // 仮のデータ
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    }
+    <div class="section">
+        <h2>VIX指数のトレンド</h2>
+        <canvas id="vixTrendChart"></canvas>
+        <script>
+            const ctx = document.getElementById('vixTrendChart').getContext('2d');
+            const vixTrendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1日', '5日', '1月', '6月', 'YTD', '1年'],
+                    datasets: [{
+                        label: 'VIX指数',
+                        data: [17.30, 16.50, 15.75, 20.00, 18.00, 16.00], // サンプルデータ
+                        backgroundColor: 'rgba(241, 196, 15, 0.2)',
+                        borderColor: 'rgba(241, 196, 15, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'VIX値'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '期間'
+                            }
                         }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    </div>
+
+    <div class="section">
+        <h2>主要な情報</h2>
+        <p>前日終値: <span class="highlight">17.30</span></p>
+        <p>日付レンジ: <span class="highlight">16.02 - 17.22</span></p>
+        <p>年レンジ: <span class="highlight">12.70 - 60.13</span></p>
+    </div>
+
+    <div class="section">
+        <h2>関連ニュース</h2>
+        <ul>
+            <li>市場の脆弱性がオプショントレーダーを試す - Bloomberg</li>
+            <li>10月の終わりが株式投資家に利益をもたらすことが多い - MarketWatch</li>
+            <li>AmazonがMetaのように「動き始める」ことができるか？ - TheStreet Pro</li>
+        </ul>
+    </div>
+
 </body>
 </html>
 ```
