@@ -4,104 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXレポート</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1, h2, h3 {
-            color: #f39c12;
+        h1 {
+            text-align: center;
         }
-        .summary, .section {
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #2c3e50;
+        .summary {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .data-section {
+            margin-bottom: 20px;
         }
         .highlight {
             font-size: 24px;
-            font-weight: bold;
-            color: #e74c3c;
+            color: #ff4081;
         }
         canvas {
             max-width: 100%;
         }
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
-
+    <h1>VIX レポート</h1>
     <div class="summary">
-        <h1>VIXレポート</h1>
-        <p>取得日時: <span class="highlight">2023年10月24日 3:15 PM GMT-5</span></p>
-        <p>VIX指数: <span class="highlight">16.37</span> (▼5.38%)</p>
+        <h2>概要</h2>
+        <p>VIXの最新値は <span class="highlight">15.79</span> で、前日比 <span class="highlight">▼3.54%</span> です。</p>
     </div>
 
-    <div class="section">
-        <h2>VIX指数のトレンド</h2>
-        <canvas id="vixTrendChart"></canvas>
-        <script>
-            const ctx = document.getElementById('vixTrendChart').getContext('2d');
-            const vixTrendChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['1日', '5日', '1月', '6月', 'YTD', '1年'],
-                    datasets: [{
-                        label: 'VIX指数',
-                        data: [17.30, 16.50, 15.75, 20.00, 18.00, 16.00], // サンプルデータ
-                        backgroundColor: 'rgba(241, 196, 15, 0.2)',
-                        borderColor: 'rgba(241, 196, 15, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'VIX値'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '期間'
-                            }
+    <div class="data-section">
+        <h2>市場データ</h2>
+        <p>取得日時: <strong>Oct 27, 3:15:01 PM GMT-5</strong></p>
+        <p>前回の終値: <strong>16.37</strong></p>
+        <p>日中の範囲: <strong>15.62 - 16.07</strong></p>
+        <p>52週の範囲: <strong>12.70 - 60.13</strong></p>
+    </div>
+
+    <div class="data-section">
+        <h2>VIXトレンド</h2>
+        <canvas id="vixChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y'],
+                datasets: [{
+                    label: 'VIX トレンド',
+                    data: [15.79, 16.20, 15.50, 17.00, 16.10, 15.90, 14.50],
+                    borderColor: '#ff4081',
+                    backgroundColor: 'rgba(255, 64, 129, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VIX値'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '期間'
                         }
                     }
                 }
-            });
-        </script>
-    </div>
-
-    <div class="section">
-        <h2>主要な情報</h2>
-        <p>前日終値: <span class="highlight">17.30</span></p>
-        <p>日付レンジ: <span class="highlight">16.02 - 17.22</span></p>
-        <p>年レンジ: <span class="highlight">12.70 - 60.13</span></p>
-    </div>
-
-    <div class="section">
-        <h2>関連ニュース</h2>
-        <ul>
-            <li>市場の脆弱性がオプショントレーダーを試す - Bloomberg</li>
-            <li>10月の終わりが株式投資家に利益をもたらすことが多い - MarketWatch</li>
-            <li>AmazonがMetaのように「動き始める」ことができるか？ - TheStreet Pro</li>
-        </ul>
-    </div>
-
+            }
+        });
+    </script>
 </body>
 </html>
 ```
