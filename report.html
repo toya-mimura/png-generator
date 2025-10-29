@@ -12,48 +12,72 @@
             background-color: #121212;
             color: #ffffff;
             margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
             padding: 20px;
         }
         h1 {
-            text-align: center;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.5em;
         }
         .summary {
-            background-color: #1e1e1e;
+            background-color: #2a2a2a;
             padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .data-section {
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         .highlight {
-            font-size: 24px;
-            color: #ff4081;
+            font-size: 1.5em;
+            color: #ffcc00;
         }
         canvas {
             max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+        }
+        .error {
+            color: #ff4444;
         }
     </style>
 </head>
 <body>
+
+<header>
     <h1>VIX レポート</h1>
+</header>
+
+<div class="container">
     <div class="summary">
         <h2>概要</h2>
-        <p>VIXの最新値は <span class="highlight">15.79</span> で、前日比 <span class="highlight">▼3.54%</span> です。</p>
+        <p>VIXの現在の値は <span class="highlight">16.42</span> で、前日比 <span class="highlight">+3.99%</span> です。</p>
+        <p>取得日時: <span class="highlight">2023年10月28日 3:15 PM GMT-5</span></p>
     </div>
 
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <p>取得日時: <strong>Oct 27, 3:15:01 PM GMT-5</strong></p>
-        <p>前回の終値: <strong>16.37</strong></p>
-        <p>日中の範囲: <strong>15.62 - 16.07</strong></p>
-        <p>52週の範囲: <strong>12.70 - 60.13</strong></p>
-    </div>
-
-    <div class="data-section">
-        <h2>VIXトレンド</h2>
-        <canvas id="vixChart"></canvas>
-    </div>
+    <h2>VIXのトレンド</h2>
+    <canvas id="vixChart"></canvas>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
@@ -62,12 +86,12 @@
             data: {
                 labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y'],
                 datasets: [{
-                    label: 'VIX トレンド',
-                    data: [15.79, 16.20, 15.50, 17.00, 16.10, 15.90, 14.50],
-                    borderColor: '#ff4081',
-                    backgroundColor: 'rgba(255, 64, 129, 0.2)',
+                    label: 'VIX',
+                    data: [15.79, 16.00, 16.20, 15.60, 16.10, 12.70, 60.13],
+                    borderColor: '#ffcc00',
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
                     borderWidth: 2,
-                    fill: true
+                    fill: true,
                 }]
             },
             options: {
@@ -79,17 +103,48 @@
                             display: true,
                             text: 'VIX値'
                         }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '期間'
-                        }
                     }
                 }
             }
         });
     </script>
+
+    <h2>市場の概要</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>インデックス名</th>
+                <th>現在の値</th>
+                <th>変動率</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dow Jones</td>
+                <td>47,706.37</td>
+                <td>+0.34%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,890.89</td>
+                <td>+0.23%</td>
+            </tr>
+            <tr>
+                <td>Nasdaq</td>
+                <td>23,827.49</td>
+                <td>+0.80%</td>
+            </tr>
+            <tr>
+                <td>Russell</td>
+                <td>2,506.65</td>
+                <td>-0.55%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="error">注意: データは提供されている情報に基づいています。投資判断は自己責任で行ってください。</p>
+</div>
+
 </body>
 </html>
 ```
