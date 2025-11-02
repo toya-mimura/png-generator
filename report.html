@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX スクレイピングレポート</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -14,96 +14,120 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2 {
-            color: #ffcc00;
+        h1, h2, h3 {
+            color: #ffdd57;
         }
         .summary {
             background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
-        .data-section {
+        .section {
             background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
+            font-size: 1.5em;
+            color: #ff4444;
         }
         canvas {
             max-width: 100%;
             height: auto;
-        }
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
         }
     </style>
 </head>
 <body>
 
     <div class="summary">
-        <h1>VIX スクレイピングレポート</h1>
-        <p>取得日時: 2023年10月31日 15:15 (GMT-5)</p>
-        <p>現在のVIX: <span class="highlight">17.44</span> (▲3.13%)</p>
+        <h1>VIX レポート</h1>
+        <p>最新のVIX値は <span class="highlight">17.44</span> で、前日比 <span class="highlight">+3.13%</span> です。</p>
+        <p>取得日時: <strong>Oct 31, 3:15:01 PM GMT-5</strong></p>
     </div>
 
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <p>前回のクローズ: 16.91</p>
-        <p>日中の価格範囲: 15.96 - 18.54</p>
-        <p>52週の価格範囲: 12.70 - 60.13</p>
-    </div>
-
-    <div class="data-section">
-        <h2>VIXのトレンド</h2>
+    <div class="section">
+        <h2>VIX 時系列データ</h2>
         <canvas id="vixChart"></canvas>
-    </div>
-
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['前日', '当日'],
-                datasets: [{
-                    label: 'VIX',
-                    data: [16.91, 17.44], // 前日と当日のVIX値
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    }
+        <script>
+            const ctx = document.getElementById('vixChart').getContext('2d');
+            const vixChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['前日', '1日前', '2日前', '3日前', '4日前'],
+                    datasets: [{
+                        label: 'VIX値',
+                        data: [16.91, 16.50, 16.70, 16.80, 16.85],
+                        borderColor: '#ff4444',
+                        backgroundColor: 'rgba(255, 68, 68, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
                 },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#333',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
                         }
                     },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: '#444'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#ffffff'
+                            },
+                            grid: {
+                                color: '#444'
+                            }
                         }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    </div>
+
+    <div class="section">
+        <h2>市場インデックス</h2>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid #444; padding: 10px;">インデックス</th>
+                <th style="border: 1px solid #444; padding: 10px;">現在値</th>
+                <th style="border: 1px solid #444; padding: 10px;">変化率</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 10px;">ダウ・ジョーンズ</td>
+                <td style="border: 1px solid #444; padding: 10px;">47,562.87</td>
+                <td style="border: 1px solid #444; padding: 10px;">+0.086%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 10px;">S&P 500</td>
+                <td style="border: 1px solid #444; padding: 10px;">6,840.20</td>
+                <td style="border: 1px solid #444; padding: 10px;">+0.26%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 10px;">ナスダック</td>
+                <td style="border: 1px solid #444; padding: 10px;">23,724.96</td>
+                <td style="border: 1px solid #444; padding: 10px;">+0.61%</td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 </html>
