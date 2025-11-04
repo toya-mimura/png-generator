@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX Analysis Report</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>VIXレポート</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
             padding: 20px;
@@ -18,137 +17,80 @@
             color: #00bcd4;
         }
         .summary {
-            background-color: #1e1e1e;
+            background-color: #2b2b2b;
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
         }
         .highlight {
-            font-size: 1.5em;
-            color: #ffeb3b;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5722;
         }
         .chart-container {
             position: relative;
-            max-width: 600px;
-            margin: auto;
+            margin: 20px 0;
+            height: 40vh;
+            width: 80vw;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #444;
-            padding: 10px;
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
             text-align: center;
         }
-        th {
-            background-color: #1e1e1e;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <h1>VIX Analysis Report</h1>
+    <h1>VIXレポート</h1>
     <div class="summary">
         <h2>概要</h2>
-        <p>現在のVIX指数は<span class="highlight">17.44</span>です。前日比<span class="highlight">+3.13%</span>の上昇を示しています。</p>
-        <p>取得日時: <strong>2023年10月31日 14:15 (GMT-6)</strong></p>
+        <p>現在のVIX値: <span class="highlight">17.17</span> (▼1.55%)</p>
+        <p>取得日時: 2023年11月3日 3:15 PM GMT-6</p>
     </div>
 
-    <h2>VIX指数のトレンド</h2>
+    <h2>市場情報</h2>
+    <p>Dow Jones: 47,336.68 (▼0.48%)</p>
+    <p>S&P 500: 6,851.97 (▲0.17%)</p>
+    <p>Nasdaq: 23,834.72 (▲0.46%)</p>
+
+    <h2>VIXトレンド</h2>
     <div class="chart-container">
         <canvas id="vixChart"></canvas>
     </div>
-
-    <h2>関連データ</h2>
-    <table>
-        <tr>
-            <th>指標</th>
-            <th>値</th>
-            <th>変化率</th>
-        </tr>
-        <tr>
-            <td>前日終値</td>
-            <td>16.91</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>日高値</td>
-            <td>18.54</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>日安値</td>
-            <td>15.96</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>年高値</td>
-            <td>60.13</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>年安値</td>
-            <td>12.70</td>
-            <td>-</td>
-        </tr>
-    </table>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
                 datasets: [{
-                    label: 'VIX指数',
-                    data: [16.91, 17.00, 15.50, 18.00, 17.44, 20.00], // 仮のデータ
-                    borderColor: '#ff5722',
-                    backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                    label: 'VIX値',
+                    data: [17.00, 17.50, 18.00, 17.40, 17.20], // 仮のデータ
+                    borderColor: '#00bcd4',
+                    backgroundColor: 'rgba(0, 188, 212, 0.5)',
+                    borderWidth: 2,
                     fill: true,
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
-                    tooltip: {
-                        bodyColor: '#ffffff',
-                        titleColor: '#00bcd4'
-                    }
-                },
                 scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
-                        },
-                        grid: {
-                            color: '#444'
-                        }
-                    },
                     y: {
-                        ticks: {
-                            color: '#ffffff'
-                        },
-                        grid: {
-                            color: '#444'
-                        }
+                        beginAtZero: true
                     }
                 }
             }
         });
     </script>
+
+    <footer>
+        <p>データ提供: Google Finance</p>
+        <p><a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #00bcd4;">詳細はこちら</a></p>
+    </footer>
+
 </body>
 </html>
 ```
