@@ -4,93 +4,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXレポート</title>
+    <title>ウェブスクレイピングレポート</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #00bcd4;
+            color: #ffcc00;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .error-message {
+            background-color: #ff4d4d;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        canvas {
+            max-width: 100%;
         }
         .summary {
-            background-color: #2b2b2b;
-            padding: 15px;
-            border-radius: 5px;
             margin-bottom: 20px;
-        }
-        .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff5722;
-        }
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
-            height: 40vh;
-            width: 80vw;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 12px;
-            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-    <h1>VIXレポート</h1>
-    <div class="summary">
-        <h2>概要</h2>
-        <p>現在のVIX値: <span class="highlight">17.17</span> (▼1.55%)</p>
-        <p>取得日時: 2023年11月3日 3:15 PM GMT-6</p>
+    <div class="container">
+        <div class="summary">
+            <h1>ウェブスクレイピングレポート</h1>
+            <p>取得日時: <strong>2023年10月</strong></p>
+            <p>データ取得に失敗しました。以下のエラーメッセージをご確認ください。</p>
+        </div>
+        <div class="error-message">
+            <h2>エラーメッセージ</h2>
+            <p>ページの取得に失敗しました:</p>
+            <p>Timeout 30000ms exceeded.<br>
+            Call log:<br>
+            - navigating to "<a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #ffcc00;" target="_blank">https://www.google.com/finance/quote/VIX:INDEXCBOE</a>", waiting until "networkidle"</p>
+        </div>
+        <div>
+            <h2>データビジュアライゼーション</h2>
+            <p>エラーのためデータを表示することができません。</p>
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
     </div>
-
-    <h2>市場情報</h2>
-    <p>Dow Jones: 47,336.68 (▼0.48%)</p>
-    <p>S&P 500: 6,851.97 (▲0.17%)</p>
-    <p>Nasdaq: 23,834.72 (▲0.46%)</p>
-
-    <h2>VIXトレンド</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
-    </div>
-
     <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
+                labels: ['エラー'],
                 datasets: [{
-                    label: 'VIX値',
-                    data: [17.00, 17.50, 18.00, 17.40, 17.20], // 仮のデータ
-                    borderColor: '#00bcd4',
-                    backgroundColor: 'rgba(0, 188, 212, 0.5)',
-                    borderWidth: 2,
-                    fill: true,
+                    label: 'エラーデータ',
+                    data: [1],
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    borderColor: 'rgba(255, 204, 0, 1)',
+                    borderWidth: 1
                 }]
             },
             options: {
-                responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'エラー数'
+                        }
                     }
                 }
             }
         });
     </script>
-
-    <footer>
-        <p>データ提供: Google Finance</p>
-        <p><a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #00bcd4;">詳細はこちら</a></p>
-    </footer>
-
 </body>
 </html>
 ```
