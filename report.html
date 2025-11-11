@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX データレポート</title>
+    <title>VIX レポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -14,47 +14,50 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2 {
-            color: #ffcc00;
+        h1 {
+            text-align: center;
+            color: #f1c40f;
         }
         .summary {
-            background-color: #1e1e1e;
-            padding: 15px;
+            background-color: #1c1c1c;
+            padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .data-section {
-            background-color: #1e1e1e;
-            padding: 15px;
+        .section {
+            background-color: #1c1c1c;
+            padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ffcc00;
+            color: #e74c3c;
         }
         canvas {
             max-width: 100%;
-            height: auto;
         }
     </style>
 </head>
 <body>
+
+    <h1>VIX レポート</h1>
+
     <div class="summary">
-        <h1>VIX データレポート</h1>
-        <p>取得日時: 2023年11月7日 3:15 PM GMT-6</p>
-        <p>VIX: <span class="highlight">19.08</span> (<span class="highlight">▼2.15%</span>)</p>
+        <h2>概要</h2>
+        <p>現在のVIXは <span class="highlight">17.60</span> で、前日比 <span class="highlight">▼7.76%</span> です。</p>
     </div>
 
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <p>Dow Jones: <span class="highlight">46,987.10 (+0.16%)</span></p>
-        <p>S&P 500: <span class="highlight">6,728.80 (+0.13%)</span></p>
-        <p>Nasdaq: <span class="highlight">23,004.54 (-0.21%)</span></p>
+    <div class="section">
+        <h2>VIX データ</h2>
+        <p>取得日時: 2023年11月10日 15:15:01 GMT-6</p>
+        <p>前回の終値: 19.08</p>
+        <p>日中の価格範囲: 17.60 - 18.82</p>
+        <p>52週の価格範囲: 12.70 - 60.13</p>
     </div>
 
-    <div class="data-section">
-        <h2>VIX 動向</h2>
+    <div class="section">
+        <h2>VIX トレンド</h2>
         <canvas id="vixChart"></canvas>
     </div>
 
@@ -63,26 +66,30 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Nov 1', 'Nov 2', 'Nov 3', 'Nov 4', 'Nov 5', 'Nov 6', 'Nov 7'],
+                labels: ['1日', '5日', '1ヶ月', '6ヶ月', '年初来', '1年', '5年'],
                 datasets: [{
                     label: 'VIX',
-                    data: [19.50, 20.25, 21.00, 19.80, 19.30, 19.60, 19.08],
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.5)',
-                    borderWidth: 2,
-                    fill: true
+                    data: [19.08, 18.50, 17.00, 18.00, 20.00, 22.00, 25.00], // 仮のデータ
+                    borderColor: '#f1c40f',
+                    backgroundColor: 'rgba(241, 196, 15, 0.3)',
+                    fill: true,
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: false
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VIX値'
+                        }
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
