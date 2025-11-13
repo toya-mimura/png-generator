@@ -15,93 +15,46 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #e91e63;
         }
         .summary {
-            font-size: 1.2em;
             margin-bottom: 20px;
-            padding: 10px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
-        }
-        .chart-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
         }
         .data-section {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
+            margin-bottom: 40px;
         }
-        .highlight {
+        .important {
             font-size: 1.5em;
-            color: #ffcc00;
+            color: #ffeb3b;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        table, th, td {
-            border: 1px solid #444;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #333;
+        canvas {
+            max-width: 100%;
         }
         @media (max-width: 600px) {
             body {
                 padding: 10px;
             }
-            .summary, .chart-container, .data-section {
-                padding: 5px;
-            }
         }
     </style>
 </head>
 <body>
-    <h1>VIX レポート</h1>
-    <div class="summary">
-        <strong>最新のVIX:</strong> <span class="highlight">17.28</span> 
-        <strong>(▼1.82%)</strong> - 取得日時: <strong>Nov 11, 3:15:01 PM GMT-6</strong>
-    </div>
 
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
+    <div class="summary">
+        <h1>VIX レポート</h1>
+        <p>取得日時: 2023年11月12日 15:15 (GMT-6)</p>
     </div>
 
     <div class="data-section">
-        <h2>市場インデックスデータ</h2>
-        <table>
-            <tr>
-                <th>インデックス</th>
-                <th>価格</th>
-                <th>変動率</th>
-            </tr>
-            <tr>
-                <td>Dow Jones</td>
-                <td>47,927.96</td>
-                <td>+1.18%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,846.61</td>
-                <td>+0.21%</td>
-            </tr>
-            <tr>
-                <td>Nasdaq</td>
-                <td>23,468.30</td>
-                <td>-0.25%</td>
-            </tr>
-        </table>
+        <h2>VIX 指数データ</h2>
+        <p class="important">現在のVIX: 17.51 (▲1.33%)</p>
+        <p>前回の終値: 17.28</p>
+        <p>日中の価格範囲: 17.10 - 18.06</p>
+        <p>52週の価格範囲: 12.70 - 60.13</p>
+    </div>
+
+    <div class="data-section">
+        <h2>VIX 時系列データ</h2>
+        <canvas id="vixChart"></canvas>
     </div>
 
     <script>
@@ -109,35 +62,36 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1D', '5D', '1M', '6M', '1Y'],
+                labels: ['前日', '今日'],
                 datasets: [{
-                    label: 'VIX',
-                    data: [17.28, 17.50, 18.00, 16.50, 14.00],
-                    borderColor: '#ffcc00',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    fill: true,
+                    label: 'VIX 指数',
+                    data: [17.28, 17.51],
+                    backgroundColor: 'rgba(233, 30, 99, 0.2)',
+                    borderColor: 'rgba(233, 30, 99, 1)',
+                    borderWidth: 2,
+                    fill: true
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: false,
+                        beginAtZero: true,
                         title: {
                             display: true,
                             text: 'VIX値'
                         }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '期間'
-                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
