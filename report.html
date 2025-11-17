@@ -9,96 +9,105 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
-            margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
+            color: #00bcd4;
         }
         .summary {
-            background-color: #1e1e1e;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #2c2c2c;
             border-radius: 8px;
         }
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
+        .data-section {
+            margin-bottom: 40px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #2c2c2c;
         }
-        .error {
-            color: red;
+        .highlight {
+            font-size: 1.5em;
+            color: #ffeb3b;
+        }
+        canvas {
+            max-width: 100%;
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>VIX レポート</h1>
     <div class="summary">
-        <h2>概要</h2>
-        <p>VIX（恐怖指数）は、現在の価格が <strong>19.83</strong> で、前日比 <strong>▼0.85%</strong> の変動を示しています。最新のデータは <strong>2023年11月14日 15:15 (GMT-6)</strong> に取得されました。</p>
+        <h1>VIX レポート</h1>
+        <p>取得日時: <strong>Nov 14, 3:15:01 PM GMT-6</strong></p>
+        <p>現在のVIX値: <span class="highlight">19.83</span> (▼0.85%)</p>
     </div>
 
-    <h2>VIX 最新データ</h2>
-    <p>現在の値: <strong>19.83</strong></p>
-    <p>前日比: <strong>▼0.85%</strong></p>
-    <p>前回の終値: <strong>20.00</strong></p>
-    <p>日レンジ: <strong>19.56 - 23.03</strong></p>
-    <p>年レンジ: <strong>12.70 - 60.13</strong></p>
-
-    <div class="chart-container">
+    <div class="data-section">
+        <h2>VIX 時系列データ</h2>
         <canvas id="vixChart"></canvas>
-    </div>
-
-    <h2>市場インデックス</h2>
-    <ul>
-        <li>ダウ平均: <strong>47,147.48</strong> (▼0.65%)</li>
-        <li>S&P 500: <strong>6,734.11</strong> (▼0.050%)</li>
-        <li>ナスダック: <strong>22,900.59</strong> (▲0.13%)</li>
-    </ul>
-
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1日', '5日', '1月', '6月', 'YTD', '1年', '5年'],
-                datasets: [{
-                    label: 'VIX トレンド',
-                    data: [20.00, 22.00, 19.50, 21.50, 18.00, 19.00, 25.00],
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'VIX 値'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '期間'
+        <script>
+            const ctx = document.getElementById('vixChart').getContext('2d');
+            const vixChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                    datasets: [{
+                        label: 'VIX 値',
+                        data: [20.00, 19.50, 22.00, 18.00, 21.00, 19.83], // サンプルデータ
+                        borderColor: '#ff5722',
+                        backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
-            }
-        });
-    </script>
-</div>
+            });
+        </script>
+    </div>
 
+    <div class="data-section">
+        <h2>市場の概況</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #444; padding: 8px;">指数</th>
+                    <th style="border: 1px solid #444; padding: 8px;">現在値</th>
+                    <th style="border: 1px solid #444; padding: 8px;">変動率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #444; padding: 8px;">Dow Jones</td>
+                    <td style="border: 1px solid #444; padding: 8px;">47,147.48</td>
+                    <td style="border: 1px solid #444; padding: 8px;">-0.65%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #444; padding: 8px;">S&P 500</td>
+                    <td style="border: 1px solid #444; padding: 8px;">6,734.11</td>
+                    <td style="border: 1px solid #444; padding: 8px;">-0.050%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #444; padding: 8px;">Nasdaq</td>
+                    <td style="border: 1px solid #444; padding: 8px;">22,900.59</td>
+                    <td style="border: 1px solid #444; padding: 8px;">+0.13%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>データ提供: <a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #00bcd4;">Google Finance</a></p>
+    </footer>
 </body>
 </html>
 ```
