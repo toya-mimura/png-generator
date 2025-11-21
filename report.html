@@ -4,18 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIXデータレポート</title>
+    <title>VIX データレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #121212;
             color: #ffffff;
-            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #ffab00;
         }
         .summary {
             background-color: #1e1e1e;
@@ -23,102 +29,122 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-        .data-section {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #1e1e1e;
-            border-radius: 5px;
-        }
         .highlight {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
+            font-size: 1.5em;
+            color: #ff4081;
         }
         .chart-container {
             position: relative;
             margin: 20px 0;
-            height: 40vh;
-            width: 80vw;
+            height: 400px;
         }
-        @media (max-width: 800px) {
-            .chart-container {
-                width: 100%;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+        th {
+            background-color: #1e1e1e;
+        }
+        .error {
+            color: #ff5252;
         }
     </style>
 </head>
 <body>
 
-    <h1>VIXデータレポート</h1>
+<div class="container">
+    <h1>VIX データレポート</h1>
     <div class="summary">
-        <h2>概要</h2>
-        <p>現在のVIX: <span class="highlight">23.66</span> (▼4.17%)</p>
-        <p>取得日時: <span class="highlight">2023年11月19日 3:15 PM GMT-6</span></p>
+        <p>最新のVIX値: <span class="highlight">26.42 (▲11.67%)</span></p>
+        <p>取得日時: 2023年11月20日 15:15 GMT-6</p>
     </div>
 
-    <div class="data-section">
-        <h2>市場データ</h2>
-        <p>ダウ平均: <span class="highlight">46,138.77 (+0.10%)</span></p>
-        <p>S&P 500: <span class="highlight">6,642.16 (+0.38%)</span></p>
-        <p>NASDAQ: <span class="highlight">22,564.23 (+0.59%)</span></p>
-        <p>VIX: <span class="highlight">23.66</span> (前日比: ▼1.03)</p>
-    </div>
+    <h2>市場インデックスのパフォーマンス</h2>
+    <table>
+        <tr>
+            <th>インデックス名</th>
+            <th>現在の値</th>
+            <th>変動率</th>
+        </tr>
+        <tr>
+            <td>Dow Jones</td>
+            <td>45,752.26</td>
+            <td>-0.84%</td>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>6,538.76</td>
+            <td>-1.56%</td>
+        </tr>
+        <tr>
+            <td>Nasdaq</td>
+            <td>22,078.05</td>
+            <td>-2.15%</td>
+        </tr>
+        <tr>
+            <td>VIX</td>
+            <td>26.42</td>
+            <td>+11.67%</td>
+        </tr>
+    </table>
 
+    <h2>VIXの推移</h2>
     <div class="chart-container">
         <canvas id="vixChart"></canvas>
     </div>
 
-    <script>
-        const ctx = document.getElementById('vixChart').getContext('2d');
-        const vixChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['前日', '当日'],
-                datasets: [{
-                    label: 'VIX',
-                    data: [24.69, 23.66],
-                    backgroundColor: 'rgba(255, 204, 0, 0.5)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
+    <h2>エラー情報</h2>
+    <p class="error">データ取得に失敗しました。再試行してください。</p>
+</div>
+
+<script>
+    const ctx = document.getElementById('vixChart').getContext('2d');
+    const vixChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Nov 1', 'Nov 5', 'Nov 10', 'Nov 15', 'Nov 20'],
+            datasets: [{
+                label: 'VIXの値',
+                data: [20, 22, 24, 23, 26.42],
+                backgroundColor: 'rgba(255, 171, 0, 0.2)',
+                borderColor: '#ffab00',
+                borderWidth: 2,
+                fill: true,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'VIXの推移',
-                        color: '#ffffff'
+                        text: 'VIXの値'
                     }
                 },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
-                        },
-                        grid: {
-                            color: '#444444'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
-                        },
-                        grid: {
-                            color: '#444444'
-                        }
+                x: {
+                    title: {
+                        display: true,
+                        text: '日付'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#ffffff'
                     }
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
 
 </body>
 </html>
