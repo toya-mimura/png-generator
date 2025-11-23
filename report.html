@@ -14,105 +14,61 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2, h3 {
-            color: #ffffff;
+        header {
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .container {
-            max-width: 1200px;
-            margin: auto;
+        h1 {
+            font-size: 2.5em;
         }
         .summary {
             background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
         }
-        .important {
-            font-size: 1.5em;
-            color: #ff4081;
-        }
-        .chart-container {
-            position: relative;
-            height: 40vh;
-            width: 80vw;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #444;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
+        .section {
+            margin: 20px 0;
+            padding: 20px;
             background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+        .highlight {
+            font-size: 1.5em;
+            color: #ff5722;
+        }
+        canvas {
+            max-width: 100%;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: <span class="important">Nov 21, 3:15:01 PM GMT-6</span></p>
-        <p>現在のVIX: <span class="important">23.43</span> (▼<span class="important">11.32%</span>)</p>
-    </div>
+<header>
+    <h1>VIX レポート</h1>
+    <p>取得日時: 2023年11月21日 3:15 PM GMT-6</p>
+</header>
 
-    <h2>市場データ</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>インデックス</th>
-                <th>価格</th>
-                <th>変動率</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>ダウ・ジョーンズ</td>
-                <td>46,245.41</td>
-                <td>+1.08%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,602.99</td>
-                <td>+0.98%</td>
-            </tr>
-            <tr>
-                <td>ナスダック</td>
-                <td>22,273.08</td>
-                <td>+0.88%</td>
-            </tr>
-            <tr>
-                <td>ラッセル 2000</td>
-                <td>2,369.59</td>
-                <td>+2.80%</td>
-            </tr>
-        </tbody>
-    </table>
+<section class="summary">
+    <h2>概要</h2>
+    <p>現在のVIX値: <span class="highlight">23.43</span> (<span class="highlight">▼11.32%</span>)</p>
+</section>
 
-    <h2>VIX トレンド</h2>
-    <div class="chart-container">
-        <canvas id="vixChart"></canvas>
-    </div>
-</div>
+<section class="section">
+    <h2>VIXのトレンド</h2>
+    <canvas id="vixTrendChart"></canvas>
+</section>
 
 <script>
-    const ctx = document.getElementById('vixChart').getContext('2d');
-    const vixChart = new Chart(ctx, {
+    const ctx = document.getElementById('vixTrendChart').getContext('2d');
+    const vixTrendChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['1日', '5日', '1月', '6月', 'YTD', '1年'],
+            labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
             datasets: [{
-                label: 'VIX',
-                data: [26.42, 23.43, 22.54, 27.84, 25.00, 30.00], // サンプルデータ
-                borderColor: '#ff4081',
-                backgroundColor: 'rgba(255, 64, 129, 0.2)',
+                label: 'VIXの変動',
+                data: [26.42, 23.00, 22.00, 25.00, 20.00], // 仮のデータ
+                backgroundColor: 'rgba(255, 87, 34, 0.5)',
+                borderColor: 'rgba(255, 87, 34, 1)',
                 borderWidth: 2,
                 fill: true,
             }]
@@ -137,6 +93,14 @@
         }
     });
 </script>
+
+<section class="section">
+    <h2>関連情報</h2>
+    <p>前回の閉値: <span class="highlight">26.42</span></p>
+    <p>日間レンジ: <span class="highlight">22.54 - 27.84</span></p>
+    <p>年間レンジ: <span class="highlight">12.70 - 60.13</span></p>
+    <p><a href="https://www.google.com/finance/quote/VIX:INDEXCBOE" style="color: #ff5722;">詳細はこちら</a></p>
+</section>
 
 </body>
 </html>
