@@ -12,40 +12,31 @@
             background-color: #121212;
             color: #ffffff;
             margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 20px;
+        h1, h2 {
+            color: #e0e0e0;
         }
         .summary {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .important {
+            font-size: 1.5em;
+            color: #ff7043;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
         }
         .data-section {
-            margin-bottom: 40px;
-        }
-        .highlight {
-            font-size: 1.5em;
-            color: #ff4081;
-        }
-        canvas {
-            max-width: 100%;
-            height: auto;
+            margin-top: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         table, th, td {
             border: 1px solid #444;
@@ -55,91 +46,80 @@
             text-align: center;
         }
         th {
-            background-color: #333;
+            background-color: #1e1e1e;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>VIX レポート</h1>
-        <div class="summary">
-            <p>取得日時: <span class="highlight">Nov 21, 3:15:01 PM GMT-6</span></p>
-            <p>現在のVIX: <span class="highlight">23.43</span> (▼11.32%)</p>
-        </div>
-        <div class="data-section">
-            <h2>VIX データ分析</h2>
-            <canvas id="vixChart"></canvas>
-            <script>
-                const ctx = document.getElementById('vixChart').getContext('2d');
-                const vixChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Nov 20', 'Nov 21', 'Nov 22', 'Nov 23', 'Nov 24'],
-                        datasets: [{
-                            label: 'VIX値',
-                            data: [25.42, 23.43, 22.54, 24.00, 23.00],
-                            backgroundColor: 'rgba(255, 64, 129, 0.2)',
-                            borderColor: 'rgba(255, 64, 129, 1)',
-                            borderWidth: 2,
-                            fill: true,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'VIX値'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: '日付'
-                                }
-                            }
-                        }
-                    }
-                });
-            </script>
-        </div>
-        <div class="data-section">
-            <h2>関連インデックス</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>インデックス名</th>
-                        <th>現在値</th>
-                        <th>変動率</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ダウ・ジョーンズ</td>
-                        <td>46,245.41</td>
-                        <td>+1.08%</td>
-                    </tr>
-                    <tr>
-                        <td>S&P 500</td>
-                        <td>6,602.99</td>
-                        <td>+0.98%</td>
-                    </tr>
-                    <tr>
-                        <td>ナスダック</td>
-                        <td>22,273.08</td>
-                        <td>+0.88%</td>
-                    </tr>
-                    <tr>
-                        <td>ラッセル2000</td>
-                        <td>2,369.59</td>
-                        <td>+2.80%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+    <h1>VIX レポート</h1>
+    <div class="summary">
+        <h2>概要</h2>
+        <p>現在のVIXは <span class="important">20.52</span>（▼<span class="important">12.42%</span>）です。取得日時: <strong>2023年11月24日 3:15 PM GMT-6</strong></p>
     </div>
+
+    <div class="data-section">
+        <h2>市場データ</h2>
+        <table>
+            <tr>
+                <th>指標</th>
+                <th>値</th>
+                <th>変動率</th>
+            </tr>
+            <tr>
+                <td>ダウ・ジョーンズ</td>
+                <td>46,448.27</td>
+                <td>+0.44%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,705.12</td>
+                <td>+1.55%</td>
+            </tr>
+            <tr>
+                <td>ナスダック</td>
+                <td>22,872.01</td>
+                <td>+2.69%</td>
+            </tr>
+            <tr>
+                <td>VIX</td>
+                <td>20.52</td>
+                <td>▼12.42%</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <h2>VIX トレンド</h2>
+        <canvas id="vixChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                datasets: [{
+                    label: 'VIX',
+                    data: [20.52, 22.00, 21.50, 19.00, 25.00, 18.00], // サンプルデータ
+                    backgroundColor: 'rgba(255, 112, 67, 0.2)',
+                    borderColor: 'rgba(255, 112, 67, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
 ```
