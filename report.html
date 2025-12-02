@@ -5,35 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIX レポート</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #282c34;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
+        h1, h2 {
+            color: #61dafb;
         }
         .summary {
-            background-color: #1e1e1e;
-            padding: 20px;
+            background-color: #3c4043;
+            padding: 15px;
             border-radius: 5px;
-            text-align: center;
+            margin-bottom: 20px;
         }
         .data-section {
-            margin-top: 30px;
+            margin: 20px 0;
         }
-        .data-title {
+        .data-highlight {
             font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        .highlight {
-            font-size: 1.2em;
-            color: #ffcc00;
+            color: #61dafb;
+            font-weight: bold;
         }
         canvas {
             max-width: 100%;
@@ -44,19 +40,18 @@
             }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <h1>VIX レポート</h1>
     <div class="summary">
-        <h2 class="data-title">VIX 現在値</h2>
-        <p class="highlight">16.35 (▼5.00%)</p>
-        <p>取得日時: 2023年11月28日 12:15 PM GMT-6</p>
+        <h2>概要</h2>
+        <p>VIXの現在の値は <span class="data-highlight">17.24</span> で、前日比 <span class="data-highlight">+5.44%</span> です。</p>
+        <p>取得日時: 2023年12月1日 3:15 PM GMT-6</p>
     </div>
 
     <div class="data-section">
-        <h2 class="data-title">VIX トレンド</h2>
+        <h2>市場データ</h2>
         <canvas id="vixChart"></canvas>
     </div>
 
@@ -65,14 +60,14 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['前日', '今日'],
+                labels: ['前日', '当日'],
                 datasets: [{
-                    label: 'VIX',
-                    data: [17.21, 16.35],
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    borderColor: 'rgba(255, 204, 0, 1)',
+                    label: 'VIX 値',
+                    data: [16.35, 17.24], // 前日と当日のVIX値
+                    backgroundColor: 'rgba(97, 218, 251, 0.2)',
+                    borderColor: 'rgba(97, 218, 251, 1)',
                     borderWidth: 2,
-                    fill: true
+                    fill: true,
                 }]
             },
             options: {
@@ -87,13 +82,14 @@
                     x: {
                         title: {
                             display: true,
-                            text: '日付'
+                            text: '日'
                         }
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true
+                        display: true,
+                        position: 'top',
                     }
                 }
             }
