@@ -16,17 +16,18 @@
         }
         h1 {
             text-align: center;
+            color: #ffcc00;
         }
         .summary {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            padding: 10px;
-            background-color: #2b2b2b;
-            border-radius: 5px;
         }
         .data-section {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
-        .important {
+        .highlight {
             font-size: 1.5em;
             color: #ffcc00;
         }
@@ -47,13 +48,16 @@
 <body>
 
     <h1>VIX レポート</h1>
+
     <div class="summary">
-        <p>取得日時: <strong>Dec 5, 3:15:01 PM GMT-6</strong></p>
-        <p>VIX 値: <span class="important">15.41</span> (▼2.34%)</p>
+        <h2>概要</h2>
+        <p>VIXの現在の値は <span class="highlight">16.66</span> で、前日比 <span class="highlight">+8.11%</span> の上昇です。</p>
+        <p>取得日時: 2023年12月8日 15:15 GMT-6</p>
     </div>
 
     <div class="data-section">
-        <h2>VIX 価格推移</h2>
+        <h2>VIX データ</h2>
+        <p>VIXは、S&P 500指数オプションに基づく株式市場のボラティリティの期待を示す指標です。</p>
         <canvas id="vixChart"></canvas>
     </div>
 
@@ -62,13 +66,13 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1日', '5日', '1ヶ月', '6ヶ月', '1年'],
+                labels: ['12/1', '12/2', '12/3', '12/4', '12/5', '12/6', '12/7', '12/8'],
                 datasets: [{
                     label: 'VIX 値',
-                    data: [15.78, 16.00, 14.50, 15.00, 18.00], // 仮のデータ
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderWidth: 2
+                    data: [15.41, 15.87, 16.12, 15.75, 15.90, 16.10, 15.80, 16.66],
+                    borderColor: 'rgba(255, 204, 0, 1)',
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    fill: true,
                 }]
             },
             options: {
@@ -79,6 +83,12 @@
                         title: {
                             display: true,
                             text: 'VIX 値'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
                         }
                     }
                 }
