@@ -9,80 +9,105 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #ffcc00;
+        h1, h2 {
+            color: #ffffff;
         }
         .summary {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
-        .data-section {
-            margin-bottom: 20px;
+        .chart-container {
+            position: relative;
+            margin: auto;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #1e1e1e;
         }
         .highlight {
             font-size: 1.5em;
             color: #ffcc00;
         }
-        canvas {
-            max-width: 100%;
-            height: auto;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
-        }
     </style>
 </head>
 <body>
-
     <h1>VIX レポート</h1>
-
     <div class="summary">
-        <h2>概要</h2>
-        <p>VIXの現在の値は <span class="highlight">16.66</span> で、前日比 <span class="highlight">+8.11%</span> の上昇です。</p>
-        <p>取得日時: 2023年12月8日 15:15 GMT-6</p>
+        <h2>サマリー</h2>
+        <p>現在のVIXは<span class="highlight">16.93</span>（<span class="highlight">▲1.62%</span>）です。最新のデータは <strong>2023年12月9日 3:15 PM GMT-6</strong> です。</p>
     </div>
 
-    <div class="data-section">
-        <h2>VIX データ</h2>
-        <p>VIXは、S&P 500指数オプションに基づく株式市場のボラティリティの期待を示す指標です。</p>
+    <div class="chart-container">
         <canvas id="vixChart"></canvas>
     </div>
+
+    <h2>市場指数</h2>
+    <table>
+        <tr>
+            <th>指数名</th>
+            <th>値</th>
+            <th>変動率</th>
+        </tr>
+        <tr>
+            <td>ダウ・ジョーンズ</td>
+            <td>47,560.29</td>
+            <td>-0.38%</td>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>6,840.51</td>
+            <td>-0.088%</td>
+        </tr>
+        <tr>
+            <td>ナスダック</td>
+            <td>23,576.49</td>
+            <td>+0.13%</td>
+        </tr>
+        <tr>
+            <td>ラッセル2000</td>
+            <td>2,526.24</td>
+            <td>+0.21%</td>
+        </tr>
+    </table>
 
     <script>
         const ctx = document.getElementById('vixChart').getContext('2d');
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['12/1', '12/2', '12/3', '12/4', '12/5', '12/6', '12/7', '12/8'],
+                labels: ['前日', '今日'],
                 datasets: [{
-                    label: 'VIX 値',
-                    data: [15.41, 15.87, 16.12, 15.75, 15.90, 16.10, 15.80, 16.66],
-                    borderColor: 'rgba(255, 204, 0, 1)',
+                    label: 'VIX値',
+                    data: [16.66, 16.93],
                     backgroundColor: 'rgba(255, 204, 0, 0.2)',
-                    fill: true,
+                    borderColor: 'rgba(255, 204, 0, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
-                responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'VIX 値'
+                            text: 'VIX値'
                         }
                     },
                     x: {
@@ -95,7 +120,6 @@
             }
         });
     </script>
-
 </body>
 </html>
 ```
