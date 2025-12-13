@@ -15,108 +15,106 @@
             padding: 20px;
         }
         h1, h2 {
-            color: #e0e0e0;
+            color: #f39c12;
         }
-        .summary {
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
+        .summary, .data-section {
             margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #1e1e1e;
         }
         .highlight {
             font-size: 1.5em;
-            color: #ff4081;
+            color: #e74c3c;
         }
-        .chart-container {
-            position: relative;
-            margin-top: 20px;
+        canvas {
+            max-width: 100%;
+            height: auto;
         }
-        .data-section {
-            margin-top: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        table, th, td {
-            border: 1px solid #444;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #1e1e1e;
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>VIX レポート</h1>
-<div class="summary">
-    <h2>概要</h2>
-    <p>現在のVIX: <span class="highlight">14.85</span> (▼5.83%)</p>
-    <p>取得日時: 2023年12月11日 3:15:01 PM GMT-6</p>
-</div>
+    <h1>VIX レポート</h1>
+    <div class="summary">
+        <h2>概要</h2>
+        <p>VIXの現在の値は <span class="highlight">15.74</span> で、前日比 <span class="highlight">+5.99%</span> の上昇です。</p>
+        <p>取得日時: 2023年12月12日 15:15 (GMT-6)</p>
+    </div>
 
-<div class="data-section">
-    <h2>市場データ</h2>
-    <table>
-        <tr>
-            <th>指数</th>
-            <th>価格</th>
-            <th>変動率</th>
-        </tr>
-        <tr>
-            <td>ダウ平均</td>
-            <td>48,704.01</td>
-            <td>+1.34%</td>
-        </tr>
-        <tr>
-            <td>S&P 500</td>
-            <td>6,901.00</td>
-            <td>+0.21%</td>
-        </tr>
-        <tr>
-            <td>ナスダック</td>
-            <td>23,593.86</td>
-            <td>−0.25%</td>
-        </tr>
-    </table>
-</div>
+    <div class="data-section">
+        <h2>市場データ</h2>
+        <p>ダウ工業株30種平均: <span class="highlight">48,458.05</span> (-0.51%)</p>
+        <p>S&P 500: <span class="highlight">6,827.41</span> (-1.07%)</p>
+        <p>ナスダック: <span class="highlight">23,195.17</span> (-1.69%)</p>
+        <p>VIX 前日終値: <span class="highlight">14.85</span></p>
+        <p>日中の価格範囲: <span class="highlight">14.85 - 17.85</span></p>
+        <p>52週間の価格範囲: <span class="highlight">13.24 - 60.13</span></p>
+    </div>
 
-<div class="chart-container">
-    <h2>VIX トレンド</h2>
-    <canvas id="vixChart"></canvas>
-</div>
+    <div class="data-section">
+        <h2>VIX トレンドチャート</h2>
+        <canvas id="vixChart"></canvas>
+    </div>
 
-<script>
-    const ctx = document.getElementById('vixChart').getContext('2d');
-    const vixChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
-            datasets: [{
-                label: 'VIX価格',
-                data: [15.77, 14.85, 16.00, 14.50, 15.00, 13.00],
-                backgroundColor: 'rgba(255, 64, 129, 0.2)',
-                borderColor: 'rgba(255, 64, 129, 1)',
-                borderWidth: 2,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+    <script>
+        const ctx = document.getElementById('vixChart').getContext('2d');
+        const vixChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1D', '5D', '1M', '6M', 'YTD', '1Y'],
+                datasets: [{
+                    label: 'VIX Price',
+                    data: [15.74, 14.50, 12.30, 16.00, 15.00, 18.00],
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: '#444444'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#444444'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
                 }
             }
-        }
-    });
-</script>
-
+        });
+    </script>
 </body>
 </html>
 ```
