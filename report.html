@@ -9,72 +9,91 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
         }
         h1, h2 {
             color: #ffcc00;
         }
         .summary {
-            background-color: #1e1e1e;
-            padding: 10px;
-            border-radius: 5px;
             margin-bottom: 20px;
-        }
-        .data-section {
-            margin-bottom: 30px;
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
         }
         .highlight {
             font-size: 1.5em;
             color: #ffcc00;
         }
         .chart-container {
-            position: relative;
-            height: 40vh;
-            width: 80vw;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
         }
-        .error {
-            color: #ff4444;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #333333;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>VIX インデックス レポート</h1>
-        <div class="summary">
-            <h2>概要</h2>
-            <p>現在のVIXは <span class="highlight">16.48</span> で、前日比 <span class="highlight">▼0.12%</span> です。</p>
-        </div>
+    <div class="summary">
+        <h1>VIX レポート</h1>
+        <p>取得日時: 2023年12月17日 15:15 (GMT-6)</p>
+        <p>現在のVIX: <span class="highlight">17.62 (▲6.92%)</span></p>
+    </div>
 
-        <div class="data-section">
-            <h2>市場データ</h2>
-            <p>取得日時: <span class="highlight">2023年12月16日 15:15 GMT-6</span></p>
-            <p>前回の終値: <span class="highlight">16.50</span></p>
-            <p>日付範囲: <span class="highlight">16.19 - 17.61</span></p>
-            <p>年範囲: <span class="highlight">14.12 - 60.13</span></p>
-        </div>
+    <div class="chart-container">
+        <canvas id="vixChart"></canvas>
+    </div>
 
-        <div class="data-section">
-            <h2>VIXのトレンド</h2>
-            <div class="chart-container">
-                <canvas id="vixChart"></canvas>
-            </div>
-        </div>
+    <h2>関連市場データ</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>指標</th>
+                <th>値</th>
+                <th>変化率</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dow Jones</td>
+                <td>47,885.97</td>
+                <td>-0.47%</td>
+            </tr>
+            <tr>
+                <td>S&P 500</td>
+                <td>6,721.43</td>
+                <td>-1.16%</td>
+            </tr>
+            <tr>
+                <td>Nasdaq</td>
+                <td>22,693.32</td>
+                <td>-1.81%</td>
+            </tr>
+            <tr>
+                <td>Russell 2000</td>
+                <td>2,492.29</td>
+                <td>-1.07%</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <div class="data-section">
-            <h2>最新ニュース</h2>
-            <p>マーケットが重要な水準で下落しています。テスラやアマゾン、国防関連企業に注目です。</p>
-        </div>
+    <div class="footer">
+        <p>データは提供された情報を基にしています。投資のアドバイスではありません。</p>
     </div>
 
     <script>
@@ -82,12 +101,12 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['0:00', '6:00', '12:00', '18:00', '24:00'],
+                labels: ['前日', '今日'],
                 datasets: [{
                     label: 'VIX',
-                    data: [16.5, 16.8, 16.4, 16.3, 16.48],
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    data: [16.48, 17.62],
                     borderColor: 'rgba(255, 204, 0, 1)',
+                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
                     borderWidth: 2,
                     fill: true,
                 }]
@@ -96,27 +115,21 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
+                        labels: {
+                            color: '#ffffff'
+                        }
                     }
                 },
                 scales: {
                     x: {
-                        title: {
-                            display: true,
-                            text: '時間'
+                        ticks: {
+                            color: '#ffffff'
                         }
                     },
                     y: {
-                        title: {
-                            display: true,
-                            text: 'VIX'
-                        },
-                        beginAtZero: true
+                        ticks: {
+                            color: '#ffffff'
+                        }
                     }
                 }
             }
