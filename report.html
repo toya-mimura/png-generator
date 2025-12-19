@@ -4,96 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIX レポート</title>
+    <title>VIX データレポート</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
-            color: #ffcc00;
+            color: #f1c40f;
         }
         .summary {
-            margin-bottom: 20px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .data-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+        canvas {
+            max-width: 100%;
         }
         .highlight {
-            font-size: 1.5em;
-            color: #ffcc00;
-        }
-        .chart-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ffffff;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #333333;
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 0.8em;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
         }
     </style>
 </head>
 <body>
+
+    <h1>VIX データレポート</h1>
+    
     <div class="summary">
-        <h1>VIX レポート</h1>
-        <p>取得日時: 2023年12月17日 15:15 (GMT-6)</p>
-        <p>現在のVIX: <span class="highlight">17.62 (▲6.92%)</span></p>
+        <h2>概要</h2>
+        <p>現在のVIX指数: <span class="highlight">16.87</span> (▼4.26%)</p>
+        <p>取得日時: <span class="highlight">Dec 18, 3:15:01 PM GMT-6</span></p>
     </div>
 
-    <div class="chart-container">
+    <div class="data-section">
+        <h2>VIX の詳細</h2>
+        <p>VIXは市場のボラティリティを示す指標であり、投資家の恐怖感を測定します。</p>
         <canvas id="vixChart"></canvas>
-    </div>
-
-    <h2>関連市場データ</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>指標</th>
-                <th>値</th>
-                <th>変化率</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Dow Jones</td>
-                <td>47,885.97</td>
-                <td>-0.47%</td>
-            </tr>
-            <tr>
-                <td>S&P 500</td>
-                <td>6,721.43</td>
-                <td>-1.16%</td>
-            </tr>
-            <tr>
-                <td>Nasdaq</td>
-                <td>22,693.32</td>
-                <td>-1.81%</td>
-            </tr>
-            <tr>
-                <td>Russell 2000</td>
-                <td>2,492.29</td>
-                <td>-1.07%</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="footer">
-        <p>データは提供された情報を基にしています。投資のアドバイスではありません。</p>
     </div>
 
     <script>
@@ -101,40 +59,37 @@
         const vixChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['前日', '今日'],
+                labels: ['Dec 17', 'Dec 18', 'Dec 19', 'Dec 20', 'Dec 21'],
                 datasets: [{
-                    label: 'VIX',
-                    data: [16.48, 17.62],
-                    borderColor: 'rgba(255, 204, 0, 1)',
-                    backgroundColor: 'rgba(255, 204, 0, 0.2)',
+                    label: 'VIX Index',
+                    data: [17.62, 16.87, 16.50, 17.00, 16.75],
+                    borderColor: '#f1c40f',
+                    backgroundColor: 'rgba(241, 196, 15, 0.2)',
                     borderWidth: 2,
-                    fill: true,
+                    fill: true
                 }]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    }
-                },
                 scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VIX 値'
                         }
                     },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
                         }
                     }
                 }
             }
         });
     </script>
+
 </body>
 </html>
 ```
